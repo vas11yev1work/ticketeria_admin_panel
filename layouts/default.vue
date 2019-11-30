@@ -1,6 +1,12 @@
 <template>
     <v-app id="inspire">
-        <v-navigation-drawer v-model="drawer" app clipped>
+        <v-app-bar clipped-left app color="blue darken-3" dark>
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>
+                <span class="hidden-sm-and-down">Admin Panel</span>
+            </v-toolbar-title>
+        </v-app-bar>
+        <v-navigation-drawer v-model="drawer" clipped app>
             <v-list dense>
                 <v-list-item link to="/site">
                     <v-list-item-content>
@@ -24,16 +30,8 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-
-        <v-app-bar app clipped-left>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-            <v-toolbar-title>Admin</v-toolbar-title>
-        </v-app-bar>
-
         <v-content>
-            <v-container fluid>
-                <nuxt></nuxt>
-            </v-container>
+            <nuxt/>
         </v-content>
     </v-app>
 </template>
@@ -42,15 +40,8 @@
     export default {
         data() {
             return {
-                drawer: true,
+                drawer: true
             }
         }
     }
 </script>
-
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap&subset=cyrillic');
-    *, *::before, *::after{
-        font-family: 'Montserrat', sans-serif;
-    }
-</style>
