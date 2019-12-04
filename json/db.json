@@ -1,0 +1,55 @@
+{
+    "gateways": [
+        {
+            "id": "1",
+            "gateway": "Большой театр",
+            "dataType": "JSON",
+            "gzip": true,
+            "method": "GET",
+            "mainURL": "https://url.ru",
+            "importCountry": "Россия",
+            "importCity": "Москва",
+            "importPlace": "Большой Теарт",
+            "languageVersion": "ru",
+            "optionURL": "https://url.ru/place",
+            "authType": "OAuth",
+            "login": "login1",
+            "password": "password1",
+            "token": "token1"
+        },
+        {
+            "id": "2",
+            "gateway": "Ледовый Дворец",
+            "dataType": "JSON",
+            "gzip": true,
+            "method": "GET",
+            "mainURL": "https://ledov.ru",
+            "importCountry": "Россия",
+            "importCity": "Санкт-Петербург",
+            "importPlace": "Ледовый дворец",
+            "languageVersion": "ru",
+            "optionURL": "https://ledov.ru/place",
+            "authType": "OAuth",
+            "login": "login2",
+            "password": "password2",
+            "token": "token2"
+        },
+        {
+            "id": "3",
+            "gateway": "Театр ЛДМ",
+            "dataType": "JSON",
+            "gzip": false,
+            "method": "GET",
+            "mainURL": "https://ldm.ru",
+            "importCountry": "Россия",
+            "importCity": "Санкт-Петербург",
+            "importPlace": "Театр ЛДМ",
+            "languageVersion": "ru",
+            "optionURL": "https://ldm.ru/place",
+            "authType": "OAuth",
+            "login": "login3",
+            "password": "password3",
+            "token": "token3"
+        }
+    ]
+}
