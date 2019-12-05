@@ -2,7 +2,7 @@
     "gateways": [
         {
             "id": "1",
-            "gateway": "Большой театр",
+            "name": "Большой театр",
             "dataType": "JSON",
             "gzip": true,
             "method": "GET",
@@ -19,7 +19,7 @@
         },
         {
             "id": "2",
-            "gateway": "Ледовый Дворец",
+            "name": "Ледовый Дворец",
             "dataType": "JSON",
             "gzip": true,
             "method": "GET",
@@ -36,7 +36,7 @@
         },
         {
             "id": "3",
-            "gateway": "Театр ЛДМ",
+            "name": "Театр ЛДМ",
             "dataType": "JSON",
             "gzip": false,
             "method": "GET",
