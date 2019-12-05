@@ -15,10 +15,11 @@
                         </p>
                     </div>
                     <v-btn
-                        class="text-capitalize font-weight-regular"
+                        class="text-capitalize font-weight-regular mb-6"
                         color="primary"
                         large>Создать новый шлюз
                     </v-btn>
+                    <GatewayTable :gateways="gatewayList"></GatewayTable>
                 </v-col>
             </v-row>
         </v-container>
@@ -30,7 +31,8 @@
     export default {
         components: {
             GatewaySideMenu: () => import('../../components/gateways/GatewaySideMenu.vue'),
-            GatewayEdit: () => import('../../components/gateways/GatewayEdit.vue')
+            GatewayEdit: () => import('../../components/gateways/GatewayEdit.vue'),
+            GatewayTable: () => import('../../components/gateways/GatewayTable.vue')
         },
         data() {
             return {
