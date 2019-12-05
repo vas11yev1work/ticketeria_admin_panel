@@ -6,11 +6,19 @@
                     <GatewaySideMenu :gateways="gatewayList"></GatewaySideMenu>
                 </v-col>
                 <v-col class="col-12" lg="9">
-                    <div class="page-title-wrap">
-                        <h1 class="headline font-weight-medium">Управление шлюзами</h1>
-                        <span class="grey--text">Обязательные поля</span>
+                    <div class="page-title-wrap mb-4">
+                        <h1 class="headline font-weight-medium">Все шлюзаы</h1>
                     </div>
-                    <GatewayEdit></GatewayEdit>
+                    <div class="description">
+                        <p class="grey--text">
+                            Для управления шлюзами, нажмите правой кнопкой мышки на пункт "Все шлюзы" и выберете нужны пункт,  либо наведите  на пункт "Все шлюзы" и нажмите на шестерёнку
+                        </p>
+                    </div>
+                    <v-btn
+                        class="text-capitalize font-weight-regular"
+                        color="primary"
+                        large>Создать новый шлюз
+                    </v-btn>
                 </v-col>
             </v-row>
         </v-container>

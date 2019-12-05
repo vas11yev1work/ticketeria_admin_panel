@@ -1,12 +1,12 @@
 <template>
-    <v-form lazy-validation ref="gateway">
+    <v-form lazy-validation ref="gateway" v-model="gatewayForm">
         <div class="fields mt-2">
             <v-row>
                 <v-col cols="12">
                     <v-text-field
-                        :rules="gatewayRules"
                         label="Название шлюза"
                         required
+                        :rules="rules.nameRules"
                         v-model="gateway.name">
                     </v-text-field>
                 </v-col>
@@ -30,6 +30,8 @@
                 <v-col cols="12">
                     <v-text-field
                         label="Основной URL API"
+                        required
+                        :rules="rules.mainURLRules"
                         v-model="gateway.mainURL">
                     </v-text-field>
                 </v-col>
@@ -38,6 +40,8 @@
                         hint="Введите параметр API для определения страны события"
                         label="Страна импортируемых событий"
                         persistent-hint
+                        required
+                        :rules="rules.importCountryRules"
                         v-model="gateway.importCountry">
                     </v-text-field>
                 </v-col>
@@ -46,6 +50,8 @@
                         hint="Введите параметр API для определения города события"
                         label="Город импортируемых событий"
                         persistent-hint
+                        required
+                        :rules="rules.importCityRules"
                         v-model="gateway.importCity">
                     </v-text-field>
                 </v-col>
@@ -54,6 +60,8 @@
                         hint="Введите параметр API для определения места события"
                         label="Местро импортируемых событий"
                         persistent-hint
+                        required
+                        :rules="rules.importPlaceRules"
                         v-model="gateway.importPlace">
                     </v-text-field>
                 </v-col>
@@ -62,6 +70,8 @@
                         hint="Введите параметр API для определения языковой версии"
                         label="Языковая версия"
                         persistent-hint
+                        required
+                        :rules="rules.languageVersionRules"
                         v-model="gateway.languageVersion">
                     </v-text-field>
                 </v-col>
@@ -69,13 +79,15 @@
                     <v-textarea
                         label="URL с параметрами выборки"
                         no-resize
+                        required
+                        :rules="rules.optionURLRules"
                         v-model="gateway.optionURL">
                     </v-textarea>
                 </v-col>
                 <v-col cols="12">
                     <v-select
-                        :items="gateway.authTypesItems"
-                        label="Метод HTTP"
+                        :items="authTypesItems"
+                        label="Способ авторизации"
                         v-model="gateway.authType">
                     </v-select>
                 </v-col>
@@ -94,6 +106,8 @@
                 <v-col cols="12">
                     <v-text-field
                         label="Токен"
+                        required
+                        :rules="rules.tokenRules"
                         v-model="gateway.token">
                     </v-text-field>
                 </v-col>
@@ -124,7 +138,7 @@
             <v-row>
                 <v-col>
                     <v-btn
-                        :disabled="!valid"
+                        @click="saveGateway"
                         class="text-capitalize font-weight-regular"
                         color="primary"
                         large>Сохранить
@@ -159,9 +173,7 @@
         },
         data() {
             return {
-                gatewayRules: [
-                    v => !!v || 'Данное поле обязательное'
-                ],
+                gatewayForm: true,
                 methodsTypesItems: [
                     'GET',
                     'POST',
@@ -177,7 +189,32 @@
                     'CSV',
                     'XML'
                 ],
-                valid: true,
+                rules: {
+                    nameRules: [
+                        v => !!v || 'Данное поле обязательно',
+                    ],
+                    mainURLRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    importCountryRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    importCityRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    importPlaceRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    languageVersionRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    optionURLRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ],
+                    tokenRules: [
+                        v => !!v || 'Данное поля обязательно',
+                    ]
+                },
                 gateway: {
                     name: '',
                     dataType: 'JSON',
@@ -211,7 +248,11 @@
             }
         },
         methods:{
-
+            saveGateway(){
+                if (this.$refs.gateway.validate()) {
+                    console.log('FROM IS VALID')
+                }
+            }
         },
     }
 
