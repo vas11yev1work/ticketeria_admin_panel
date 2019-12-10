@@ -1,12 +1,7 @@
 <template>
-    <v-card class="mx-auto p-0 pt-2 pb-2">
+    <v-card class="mx-auto p-0 pt-2 pb-2" oncontextmenu="return false">
         <v-list>
-            <v-list-item v-for="gateway in gateways" :key="gateway.id" link
-                         :to="{ name: 'gateways-id', params: { id: gateway.id } }">
-                <v-list-item-content>
-                    <span>{{ gateway.name }}</span>
-                </v-list-item-content>
-            </v-list-item>
+            <GatewayListItem v-for="gateway in gateways" :key="gateway.id" :gateway="gateway"/>
         </v-list>
     </v-card>
 </template>
@@ -21,9 +16,12 @@
                 }
             }
         },
+        components: {
+            GatewayListItem: () => import('./GatewayListItem')
+        },
         data() {
             return {}
-        },
+        }
     }
 </script>
 

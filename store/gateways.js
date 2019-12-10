@@ -1,3 +1,5 @@
+import gatewaysRepository from "~/repository/gatewaysRepository";
+
 export const state = () => ({
     gatewayList: [],
 });
@@ -10,8 +12,8 @@ export const mutations = {
 
 export const actions = {
     async fetchGateways({commit}){
-        const gateways = await this.$axios.$get('http://localhost:3001/gateways');
-        commit('setGateways', gateways);
+        const gateways = await gatewaysRepository.getAllGateways();
+        commit('setGateways', gateways.data);
     },
 };
 

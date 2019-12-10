@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-        <v-app-bar clipped-left app color="blue darken-3" dark>
+        <v-app-bar clipped-left app color="blue darken-3" dark style="z-index: 999">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <span class="hidden-sm-and-down">Admin Panel</span>

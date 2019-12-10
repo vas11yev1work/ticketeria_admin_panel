@@ -236,14 +236,14 @@
             }
         },
         watch:{
-            gatewayObject: function (val, oldVal) {
+            gatewayObject(val, oldVal) {
                 if(val !== undefined && val.name !== undefined){
                     Object.assign(this.gateway, val);
                 }
             }
         },
         mounted(){
-            if(this.gatewayObject !== undefined && this.gatewayObject !== undefined){
+            if(this.gatewayObject !== undefined && this.gatewayObject !== null){
                 Object.assign(this.gateway, this.gatewayObject);
             }
         },
