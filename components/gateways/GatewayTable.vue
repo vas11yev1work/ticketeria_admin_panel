@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr style="cursor: pointer;" v-for="gateway in gateways" :key="gateway.id" @click="redirectToGateway(gateway.id)">
+            <tr style="cursor: pointer;" v-for="gateway in gateways" :key="gateway.id" @click="redirectToGateway(gateway._id)">
                 <td>{{ gateway.name }}</td>
                 <td>{{ gateway.dataType }}</td>
                 <td>{{ gateway.importCountry }}</td>

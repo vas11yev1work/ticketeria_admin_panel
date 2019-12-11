@@ -3,11 +3,11 @@
         <v-container>
             <v-row>
                 <v-col class="col-12" lg="3">
-                    <GatewaySideMenu :gateways="gatewayList"></GatewaySideMenu>
+                    <GatewaySideMenu :gateways="gatewayList"/>
                 </v-col>
                 <v-col class="col-12" lg="9">
                     <div class="page-title-wrap mb-4">
-                        <h1 class="headline font-weight-medium">Все шлюзаы</h1>
+                        <h1 class="headline font-weight-medium">Все шлюзы</h1>
                     </div>
                     <div class="description">
                         <p class="grey--text">
@@ -17,9 +17,9 @@
                     <v-btn
                         class="text-capitalize font-weight-regular mb-6"
                         color="primary"
-                        large>Создать новый шлюз
+                        large @click="newGateway">Создать новый шлюз
                     </v-btn>
-                    <GatewayTable :gateways="gatewayList"></GatewayTable>
+                    <GatewayTable :gateways="gatewayList"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -53,6 +53,9 @@
             ...mapActions({
                 fetchGateways: 'gateways/fetchGateways'
             }),
+            newGateway() {
+
+            }
         }
     }
 </script>

@@ -1,5 +1,3 @@
-import gatewaysRepository from "~/repository/gatewaysRepository";
-
 export const state = () => ({
     gatewayList: [],
 });
@@ -7,14 +5,15 @@ export const state = () => ({
 export const mutations = {
     setGateways(state, gateways){
         state.gatewayList = gateways;
-    },
+    }
 };
 
 export const actions = {
     async fetchGateways({commit}){
-        const gateways = await gatewaysRepository.getAllGateways();
-        commit('setGateways', gateways.data);
-    },
+        await this.$axios.$get('/api/v50/gates').then(response => {
+            commit('setGateways', response.data);
+        }).catch(err => console.log(err));
+    }
 };
 
 export const getters = {

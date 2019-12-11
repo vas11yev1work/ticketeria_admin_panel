@@ -2,8 +2,7 @@
     <v-list-item link @click.right="ctxMenu = !ctxMenu" class="menu-item">
         <v-list-item-content class="item">
             <div class="item-wrap">
-<!--                <span class="item-span">{{ gateway.name }}</span>-->
-                <nuxt-link class="menu-item-link" :to="{ name: 'gateways-id', params: { id: gateway.id } }">
+                <nuxt-link class="menu-item-link" :to="{ name: 'gateways-id', params: { id: gateway._id } }">
                     {{ gateway.name }}
                 </nuxt-link>
                 <v-btn text icon @click="ctxMenu = !ctxMenu" class="icon-button">
@@ -16,7 +15,7 @@
                 <v-list-item link to="/">
                     <v-list-item-title>Создать новый шлюз</v-list-item-title>
                 </v-list-item>
-                <v-list-item link :to="{ name: 'gateways-id', params: { id: gateway.id } }" @click="ctxMenu = false">
+                <v-list-item link :to="{ name: 'gateways-id', params: { id: gateway._id } }" @click="ctxMenu = false">
                     <v-list-item-title>Настроить шлюз</v-list-item-title>
                 </v-list-item>
                 <v-list-item>

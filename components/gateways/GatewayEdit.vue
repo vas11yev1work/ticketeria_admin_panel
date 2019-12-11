@@ -18,7 +18,7 @@
                     </v-select>
                 </v-col>
                 <v-col cols="6">
-                    <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"></v-checkbox>
+                    <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"/>
                 </v-col>
                 <v-col cols="12">
                     <v-select
@@ -30,8 +30,6 @@
                 <v-col cols="12">
                     <v-text-field
                         label="Основной URL API"
-                        required
-                        :rules="rules.mainURLRules"
                         v-model="gateway.mainURL">
                     </v-text-field>
                 </v-col>
@@ -40,8 +38,6 @@
                         hint="Введите параметр API для определения страны события"
                         label="Страна импортируемых событий"
                         persistent-hint
-                        required
-                        :rules="rules.importCountryRules"
                         v-model="gateway.importCountry">
                     </v-text-field>
                 </v-col>
@@ -50,8 +46,6 @@
                         hint="Введите параметр API для определения города события"
                         label="Город импортируемых событий"
                         persistent-hint
-                        required
-                        :rules="rules.importCityRules"
                         v-model="gateway.importCity">
                     </v-text-field>
                 </v-col>
@@ -60,8 +54,6 @@
                         hint="Введите параметр API для определения места события"
                         label="Местро импортируемых событий"
                         persistent-hint
-                        required
-                        :rules="rules.importPlaceRules"
                         v-model="gateway.importPlace">
                     </v-text-field>
                 </v-col>
@@ -70,8 +62,6 @@
                         hint="Введите параметр API для определения языковой версии"
                         label="Языковая версия"
                         persistent-hint
-                        required
-                        :rules="rules.languageVersionRules"
                         v-model="gateway.languageVersion">
                     </v-text-field>
                 </v-col>
@@ -79,8 +69,6 @@
                     <v-textarea
                         label="URL с параметрами выборки"
                         no-resize
-                        required
-                        :rules="rules.optionURLRules"
                         v-model="gateway.optionURL">
                     </v-textarea>
                 </v-col>
@@ -106,8 +94,6 @@
                 <v-col cols="12">
                     <v-text-field
                         label="Токен"
-                        required
-                        :rules="rules.tokenRules"
                         v-model="gateway.token">
                     </v-text-field>
                 </v-col>
@@ -175,44 +161,22 @@
             return {
                 gatewayForm: true,
                 methodsTypesItems: [
-                    'GET',
-                    'POST',
-                    'PULL',
-                    'DELETE'
+                    'get',
+                    'post',
+                    'pull',
+                    'delete'
                 ],
                 authTypesItems: [
-                    'OAuth',
-                    'OAuth2'
+                    'OAuth'
                 ],
                 dataTypesItems: [
-                    'JSON',
-                    'CSV',
-                    'XML'
+                    'json',
+                    'csv',
+                    'xml'
                 ],
                 rules: {
                     nameRules: [
                         v => !!v || 'Данное поле обязательно',
-                    ],
-                    mainURLRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    importCountryRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    importCityRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    importPlaceRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    languageVersionRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    optionURLRules: [
-                        v => !!v || 'Данное поля обязательно',
-                    ],
-                    tokenRules: [
-                        v => !!v || 'Данное поля обязательно',
                     ]
                 },
                 gateway: {
