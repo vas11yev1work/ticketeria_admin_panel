@@ -24,13 +24,13 @@
                     <v-select
                         :items="methodsTypesItems"
                         label="Метод HTTP"
-                        v-model="gateway.method">
+                        v-model="gateway.httpMethod">
                     </v-select>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Основной URL API"
-                        v-model="gateway.mainURL">
+                        v-model="gateway.apiUrl">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -38,7 +38,7 @@
                         hint="Введите параметр API для определения страны события"
                         label="Страна импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importCountry">
+                        v-model="gateway.apiParamsCountry">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -46,7 +46,7 @@
                         hint="Введите параметр API для определения города события"
                         label="Город импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importCity">
+                        v-model="gateway.apiParamsCity">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -54,7 +54,7 @@
                         hint="Введите параметр API для определения места события"
                         label="Местро импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importPlace">
+                        v-model="gateway.apiParamsPlace">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -62,39 +62,47 @@
                         hint="Введите параметр API для определения языковой версии"
                         label="Языковая версия"
                         persistent-hint
-                        v-model="gateway.languageVersion">
+                        v-model="gateway.apiParamsLanguage">
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                        hint="Введите параметр API для определения валюты"
+                        label="Валюта"
+                        persistent-hint
+                        v-model="gateway.apiParamsCurrency">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-textarea
                         label="URL с параметрами выборки"
                         no-resize
-                        v-model="gateway.optionURL">
+                        v-model="gateway.apiParamsUrl">
                     </v-textarea>
                 </v-col>
                 <v-col cols="12">
                     <v-select
                         :items="authTypesItems"
                         label="Способ авторизации"
-                        v-model="gateway.authType">
+                        v-model="gateway.apiParamsAuthType">
                     </v-select>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Логин(если есть)"
-                        v-model="gateway.login">
+                        v-model="gateway.apiParamsAuthLogin">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Пароль (если есть)"
-                        v-model="gateway.password">
+                        v-model="gateway.apiParamsAuthPassword">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Токен"
-                        v-model="gateway.token">
+                        v-model="gateway.apiParamsAuthToken">
                     </v-text-field>
                 </v-col>
             </v-row>
@@ -183,17 +191,18 @@
                     name: '',
                     dataType: 'JSON',
                     gzip: false,
-                    method: 'GET',
-                    mainURL: '',
-                    importCountry: '',
-                    importCity: '',
-                    importPlace: '',
-                    languageVersion: '',
-                    optionURL: '',
-                    authType: 'OAuth',
-                    login: '',
-                    password: '',
-                    token: '',
+                    httpMethod: 'GET',
+                    apiUrl: '',
+                    apiParamsCountry: '',
+                    apiParamsCity: '',
+                    apiParamsPlace: '',
+                    apiParamsLanguage: '',
+                    apiParamsCurrency: '',
+                    apiParamsUrl: '',
+                    apiParamsAuthType: 'OAuth',
+                    apiParamsAuthLogin: '',
+                    apiParamsAuthPassword: '',
+                    apiParamsAuthToken: '',
                     connectingError: false,
                     connectingLoading: true,
                 }
