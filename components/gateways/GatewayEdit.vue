@@ -149,6 +149,7 @@
                         class="text-capitalize font-weight-regular"
                         color="red"
                         large
+                        v-if="!noDelete"
                         outlined>Удалить
                     </v-btn>
                 </v-col>
@@ -163,6 +164,12 @@
         props:{
             gatewayObject: {
                 type: Object,
+            },
+            noDelete: {
+                type: Boolean
+            },
+            createMode: {
+                type: Boolean
             }
         },
         data() {
@@ -223,7 +230,10 @@
         methods:{
             saveGateway(){
                 if (this.$refs.gateway.validate()) {
-                    console.log('FROM IS VALID')
+                    console.log('FROM IS VALID');
+                    if(this.createMode) {
+                        this.$store.dispatch('gateways/createGateway', this.gateway);
+                    }
                 }
             }
         },

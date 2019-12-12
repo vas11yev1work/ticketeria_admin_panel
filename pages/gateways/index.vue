@@ -15,6 +15,8 @@
                         </p>
                     </div>
                     <v-btn
+                        link
+                        to="/newGateway"
                         class="text-capitalize font-weight-regular mb-6"
                         color="primary"
                         large @click="newGateway">Создать новый шлюз
