@@ -5,18 +5,15 @@
                 <v-col class="col-12" lg="3">
                     <GatewaySideMenu :gateways="gatewayList"/>
                 </v-col>
-                <v-col class="col-12" lg="9" v-if="gateway !== undefined">
+                <v-col class="col-12" lg="9">
                     <div class="page-title-wrap">
-                        <h1 class="headline font-weight-medium">Управление шлюзами</h1>
+                        <h1 class="headline font-weight-medium">Создание шлюза</h1>
                         <span class="grey--text">Обязательные поля</span>
                         <v-alert :value="alert.shown" @input="alert.shown = $event" dismissible transition="scale-transition" type="error">
                             Произошла ошибка: {{alert.text}}
                         </v-alert>
                     </div>
-                    <GatewayEdit @input="onInput" :disabled="processing" :gatewayObject="gateway"/>
-                </v-col>
-                <v-col class="col-12 text-center" lg="9" v-else>
-                    <span style="font-size: 25px">Ничего не наденно!</span>
+                    <GatewayEdit @input="onInput" :disabled="processing"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -24,16 +21,14 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
-    import GatewaySideMenu from "../../components/gateways/GatewaySideMenu";
-    import GatewayEdit from "../../components/gateways/GatewayEdit";
-    import utils from "../../utils/Utils";
-
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import utils from '../../utils/Utils';
     export default {
-        name: 'gatewayView',
+        name: 'gatewayCreation',
         components: {
-            GatewayEdit,
             GatewaySideMenu: () => import('../../components/gateways/GatewaySideMenu.vue'),
+            GatewayEdit: () => import('../../components/gateways/GatewayEdit.vue'),
+            GatewayTable: () => import('../../components/gateways/GatewayTable.vue')
         },
         data() {
             return {
@@ -42,63 +37,40 @@
                     text: true
                 },
                 processing: false,
-                timeoutId: 0
             }
         },
-
         computed: {
             ...mapGetters({
                 gatewayList: 'gateways/gatewayList',
             }),
-            gateway(){
-                return this.gatewayList.find(i => i._id === this.$route.params.id);
-            },
         },
-        async mounted() {
-            this.fetchGateways();
+        async mounted(){
+            if(this.gatewayList.length === 0){
+                await this.fetchGateways();
+            }
         },
-        beforeRouteLeave(to, from, next){
-            next();
+        beforeDestroy(){
+
         },
         methods:{
             ...mapActions({
                 fetchGateways: 'gateways/fetchGateways',
-                deleteGateway: 'gateways/deleteGateway',
-                updateGateway: 'gateways/updateGateway'
+                createGateway: 'gateways/createGateway'
             }),
-
-
             async onInput(event) {
                 switch (event.type) {
                     case 'save':
-                        await this.tryUpdate(event.data);
+                        await this.tryCreate(event.data);
                         break;
                     case 'cancel':
                         this.$router.push('/gateways');
                         break;
-                    case 'delete':
-                        await this.tryDelete();
-                        break;
                 }
             },
-            async tryUpdate(data){
+            async tryCreate(data){
                 try{
                     this.processing = true;
-                    await this.updateGateway({id: this.$route.params.id, options: utils.normalizeBeforeSend(data)});
-                    this.$router.push('/gateways')
-                }catch (e) {
-                    this.$emit('error', e);
-                    this.$vuetify.goTo(0);
-                    this.alert.shown = true;
-                    this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
-                }
-                this.processing = false;
-            },
-            async tryDelete(){
-                try{
-                    this.processing = true;
-                    console.log(this.$route.params);
-                    await this.deleteGateway(this.$route.params.id);
+                    await this.createGateway(utils.normalizeBeforeSend(data));
                     this.$router.push('/gateways')
                 }catch (e) {
                     this.$emit('error', e);

@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "auth0-js": "^9.11.3",
+    "eventsource-polyfill": "^0.9.6",
     "jwt-decode": "^2.2.0",
     "nuxt": "^2.0.0"
   },

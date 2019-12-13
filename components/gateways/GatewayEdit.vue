@@ -1,12 +1,12 @@
 <template>
-    <v-form lazy-validation ref="gateway">
+    <v-form ref="gateway">
         <div class="fields mt-2">
             <v-row>
                 <v-col cols="12">
                     <v-text-field
-                        :rules="gatewayRules"
                         label="Название шлюза"
                         required
+                        :rules="rules.nameRules"
                         v-model="gateway.name">
                     </v-text-field>
                 </v-col>
@@ -18,19 +18,19 @@
                     </v-select>
                 </v-col>
                 <v-col cols="6">
-                    <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"></v-checkbox>
+                    <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"/>
                 </v-col>
                 <v-col cols="12">
                     <v-select
                         :items="methodsTypesItems"
                         label="Метод HTTP"
-                        v-model="gateway.method">
+                        v-model="gateway.httpMethod">
                     </v-select>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Основной URL API"
-                        v-model="gateway.mainURL">
+                        v-model="gateway.apiUrl">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -38,7 +38,7 @@
                         hint="Введите параметр API для определения страны события"
                         label="Страна импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importCountry">
+                        v-model="gateway.apiParamsCountry">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -46,7 +46,7 @@
                         hint="Введите параметр API для определения города события"
                         label="Город импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importCity">
+                        v-model="gateway.apiParamsCity">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -54,7 +54,7 @@
                         hint="Введите параметр API для определения места события"
                         label="Местро импортируемых событий"
                         persistent-hint
-                        v-model="gateway.importPlace">
+                        v-model="gateway.apiParamsPlace">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -62,39 +62,47 @@
                         hint="Введите параметр API для определения языковой версии"
                         label="Языковая версия"
                         persistent-hint
-                        v-model="gateway.languageVersion">
+                        v-model="gateway.apiParamsLanguage">
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                        hint="Введите параметр API для определения валюты"
+                        label="Валюта"
+                        persistent-hint
+                        v-model="gateway.apiParamsCurrency">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-textarea
                         label="URL с параметрами выборки"
                         no-resize
-                        v-model="gateway.optionURL">
+                        v-model="gateway.apiParamsUrl">
                     </v-textarea>
                 </v-col>
                 <v-col cols="12">
                     <v-select
-                        :items="gateway.authTypesItems"
-                        label="Метод HTTP"
-                        v-model="gateway.authType">
+                        :items="authTypesItems"
+                        label="Способ авторизации"
+                        v-model="gateway.apiParamsAuthType">
                     </v-select>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Логин(если есть)"
-                        v-model="gateway.login">
+                        v-model="gateway.apiParamsAuthLogin">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Пароль (если есть)"
-                        v-model="gateway.password">
+                        v-model="gateway.apiParamsAuthPassword">
                     </v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
                         label="Токен"
-                        v-model="gateway.token">
+                        v-model="gateway.apiParamsAuthToken">
                     </v-text-field>
                 </v-col>
             </v-row>
@@ -124,23 +132,29 @@
             <v-row>
                 <v-col>
                     <v-btn
-                        :disabled="!valid"
+                        @click="saveGateway"
                         class="text-capitalize font-weight-regular"
                         color="primary"
+                        :disabled="disabled"
                         large>Сохранить
                     </v-btn>
                     <v-btn
+                        @click="cancelEdit"
                         class="text-capitalize font-weight-regular"
                         color="primary"
                         large
+                        :disabled="disabled"
                         outlined>Отменить
                     </v-btn>
                 </v-col>
                 <v-col class="d-flex justify-end">
                     <v-btn
+                        @click="deleteGateway"
                         class="text-capitalize font-weight-regular"
                         color="red"
                         large
+                        v-if="!noDelete"
+                        :disabled="disabled"
                         outlined>Удалить
                     </v-btn>
                 </v-col>
@@ -155,63 +169,88 @@
         props:{
             gatewayObject: {
                 type: Object,
+            },
+            noDelete: {
+                type: Boolean
+            },
+            disabled: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
-                gatewayRules: [
-                    v => !!v || 'Данное поле обязательное'
-                ],
+                gatewayForm: true,
                 methodsTypesItems: [
-                    'GET',
-                    'POST',
-                    'PULL',
-                    'DELETE'
+                    {text: 'GET', value: 'get'},
+                    {text: 'POST', value: 'post'},
+                    {text: 'PULL', value: 'pull'},
+                    {text: 'Delete', value: 'delete'}
                 ],
                 authTypesItems: [
-                    'OAuth',
-                    'OAuth2'
+                    'OAuth'
                 ],
                 dataTypesItems: [
-                    'JSON',
-                    'CSV',
-                    'XML'
+                    {text: 'JSON', value: 'json'},
+                    {text: 'CSV', value: 'csv'},
+                    {text: 'XML', value: 'xml'}
                 ],
-                valid: true,
+                rules: {
+                    nameRules: [
+                        v => !!v || 'Данное поле обязательно',
+                    ]
+                },
                 gateway: {
                     name: '',
-                    dataType: 'JSON',
+                    dataType: 'json',
                     gzip: false,
-                    method: 'GET',
-                    mainURL: '',
-                    importCountry: '',
-                    importCity: '',
-                    importPlace: '',
-                    languageVersion: '',
-                    optionURL: '',
-                    authType: 'OAuth',
-                    login: '',
-                    password: '',
-                    token: '',
+                    httpMethod: 'get',
+                    apiUrl: '',
+                    apiParamsCountry: '',
+                    apiParamsCity: '',
+                    apiParamsPlace: '',
+                    apiParamsLanguage: '',
+                    apiParamsCurrency: '',
+                    apiParamsUrl: '',
+                    apiParamsAuthType: 'OAuth',
+                    apiParamsAuthLogin: '',
+                    apiParamsAuthPassword: '',
+                    apiParamsAuthToken: '',
                     connectingError: false,
                     connectingLoading: true,
                 }
             }
         },
+        computed:{
+
+        },
         watch:{
-            gatewayObject: function (val, oldVal) {
+            gatewayObject(val, oldVal) {
                 if(val !== undefined && val.name !== undefined){
                     Object.assign(this.gateway, val);
                 }
             }
         },
         mounted(){
-            if(this.gatewayObject !== undefined && this.gatewayObject !== undefined){
+            if(this.gatewayObject !== undefined && this.gatewayObject !== null){
                 Object.assign(this.gateway, this.gatewayObject);
             }
         },
         methods:{
-
+            saveGateway(){
+                if (this.$refs.gateway.validate()) {
+                    console.log('FROM IS VALID');
+                    this.$emit('input', {type: 'save', data: this.gateway});
+                }else{
+                    this.$vuetify.goTo(0);
+                }
+            },
+            deleteGateway(){
+                this.$emit('input', {type: 'delete', data: this.gateway});
+            },
+            cancelEdit(){
+                this.$emit('input', {type: 'cancel', data: this.gateway});
+            }
         },
     }
 

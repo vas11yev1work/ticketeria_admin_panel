@@ -46,7 +46,13 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
+    axios: {
+        proxy: true,
+        headers: { 'Cache-Control': 'no-cache' },
+    },
+    proxy: {
+        '/api/': 'https://ticketeria.es/',
+    },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
