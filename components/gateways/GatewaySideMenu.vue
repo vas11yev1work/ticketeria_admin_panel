@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto p-0 pt-0 pb-2" flat oncontextmenu="return false">
+    <v-card class="mx-auto p-0 pt-0 pb-2 sticky" flat oncontextmenu="return false">
         <v-toolbar dense>
             <v-toolbar-title>Шлюзы</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -45,4 +45,10 @@
 </script>
 
 <style scoped>
+    @media screen and (min-width:79em) {
+        .sticky{
+            position: sticky;
+            top: 84px;
+        }
+    }
 </style>

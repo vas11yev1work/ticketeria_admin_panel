@@ -1,10 +1,12 @@
 export const state = () => ({
     gatewayList: [],
+    loaded: false
 });
 
 export const mutations = {
     setGateways(state, gateways){
         state.gatewayList = gateways;
+        state.loaded = true;
     },
     addGateway(state, gateway) {
         state.gatewayList.push(gateway);
@@ -26,7 +28,7 @@ export const actions = {
             commit('setGateways', data);
         } catch (error) {
             if (error.response) {
-                context.commit('setLastError', {type: 'response', error: error.response.data})
+                commit('setLastError', {type: 'response', error: error.response.data}, {root: true})
             }else if(error.request){
                 context.commit('setLastError', {type: 'request', error: error.request})
             }else{
@@ -90,4 +92,5 @@ export const actions = {
 
 export const getters = {
     gatewayList: state => state.gatewayList,
+    gatewaysLoaded: state => state.loaded,
 };

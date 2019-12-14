@@ -106,27 +106,27 @@
                     </v-text-field>
                 </v-col>
             </v-row>
-            <v-row v-if="!gateway.connectingError">
+            <v-row>
                 <v-col cols="12">
                     <v-btn
+                        @click="checkConnection"
                         class="text-capitalize font-weight-regular"
                         color="green"
                         dark
-                        large>Проверить подключение
-                    </v-btn>
-                    <span class="status ml-4 green--text font-weight-bold">ОК</span>
-                </v-col>
-            </v-row>
-            <v-row v-else>
-                <v-col cols="12">
-                    <v-btn
-                        :loading="gateway.connectingLoading"
-                        class="text-capitalize font-weight-regular"
-                        color="primary"
                         large
-                        outlined>Проверить подключение
+                        >
+                        <v-progress-circular
+                            v-if="checkResult.loading"
+                            indeterminate
+                            color="white"
+                            class="mr-2"
+                        ></v-progress-circular>
+                        Проверить подключение
                     </v-btn>
-                    <span class="status ml-4 red--text font-weight-bold">ERROR</span>
+                    <span>
+                        <span v-if="checkResult.error === false && checkResult.status !== ''" class="status ml-4 green--text font-weight-bold">Ок! Код: {{checkResult.status}}</span>
+                        <span v-else-if="checkResult.error === true" class="status ml-4 red--text font-weight-bold">Ошибка! Код: {{checkResult.status}}</span>
+                    </span>
                 </v-col>
             </v-row>
             <v-row>
@@ -166,7 +166,7 @@
 <script>
     export default {
         name: "GatewayEdit",
-        props:{
+        props: {
             gatewayObject: {
                 type: Object,
             },
@@ -176,6 +176,16 @@
             disabled: {
                 type: Boolean,
                 default: false
+            },
+            checkResult: {
+                type: Object,
+                default() {
+                    return {
+                        loading: false,
+                        status: '',
+                        error: false
+                    }
+                }
             }
         },
         data() {
@@ -216,40 +226,41 @@
                     apiParamsAuthLogin: '',
                     apiParamsAuthPassword: '',
                     apiParamsAuthToken: '',
-                    connectingError: false,
-                    connectingLoading: true,
-                }
+                    }
             }
         },
-        computed:{
-
-        },
-        watch:{
+        computed: {},
+        watch: {
             gatewayObject(val, oldVal) {
-                if(val !== undefined && val.name !== undefined){
+                if (val !== undefined && val.name !== undefined) {
                     Object.assign(this.gateway, val);
+                    this.gateway.gzip = this.gateway.gzip === 'true';
                 }
             }
         },
-        mounted(){
-            if(this.gatewayObject !== undefined && this.gatewayObject !== null){
+        mounted() {
+            if (this.gatewayObject !== undefined && this.gatewayObject !== null) {
                 Object.assign(this.gateway, this.gatewayObject);
+                this.gateway.gzip = this.gateway.gzip === 'true';
             }
         },
-        methods:{
-            saveGateway(){
+        methods: {
+            saveGateway() {
                 if (this.$refs.gateway.validate()) {
                     console.log('FROM IS VALID');
                     this.$emit('input', {type: 'save', data: this.gateway});
-                }else{
+                } else {
                     this.$vuetify.goTo(0);
                 }
             },
-            deleteGateway(){
+            deleteGateway() {
                 this.$emit('input', {type: 'delete', data: this.gateway});
             },
-            cancelEdit(){
+            cancelEdit() {
                 this.$emit('input', {type: 'cancel', data: this.gateway});
+            },
+            checkConnection() {
+                this.$emit('input', {type: 'checkConnection', data: this.gateway});
             }
         },
     }

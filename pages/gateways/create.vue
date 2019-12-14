@@ -1,23 +1,15 @@
 <template>
-    <div class="gateways-page">
-        <v-container>
-            <v-row>
-                <v-col class="col-12" lg="3">
-                    <GatewaySideMenu :gateways="gatewayList"/>
-                </v-col>
-                <v-col class="col-12" lg="9">
-                    <div class="page-title-wrap">
-                        <h1 class="headline font-weight-medium">Создание шлюза</h1>
-                        <span class="grey--text">Обязательные поля</span>
-                        <v-alert :value="alert.shown" @input="alert.shown = $event" dismissible transition="scale-transition" type="error">
-                            Произошла ошибка: {{alert.text}}
-                        </v-alert>
-                    </div>
-                    <GatewayEdit @input="onInput" :disabled="processing"/>
-                </v-col>
-            </v-row>
-        </v-container>
-    </div>
+    <v-col class="col-12" lg="9">
+        <div class="page-title-wrap">
+            <h1 class="headline font-weight-medium">Создание шлюза</h1>
+            <span class="grey--text">Обязательные поля</span>
+            <v-alert :value="alert.shown" @input="alert.shown = $event" dismissible transition="scale-transition"
+                     type="error">
+                Произошла ошибка: {{alert.text}}
+            </v-alert>
+        </div>
+        <GatewayEdit @input="onInput" :disabled="processing"/>
+    </v-col>
 </template>
 
 <script>

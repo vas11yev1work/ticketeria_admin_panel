@@ -1,11 +1,21 @@
 <template>
-    <v-list-item link @click.right="ctxMenu = !ctxMenu" class="menu-item">
-        <v-list-item-content class="item">
+    <v-list-item link @click.right="ctxMenu = !ctxMenu" class="menu-item"
+                 :class="this.$route.params.id === gateway._id ? 'v-list-item--active' : ''">
+        <v-list-item-content @click="onListItemClick" class="item">
             <div class="item-wrap">
-                <nuxt-link class="menu-item-link" :to="{ name: 'gateways-id', params: { id: gateway._id } }">
-                    {{ gateway.name }}
-                </nuxt-link>
-                <v-btn text icon @click="ctxMenu = !ctxMenu" class="icon-button">
+                <v-text-field
+                    v-if="editing"
+                    v-model="name"
+                    ref="nameInput"
+                    label="Filled"
+                    :loading="loading"
+                    flat
+                    solo
+                    @blur="endRename"
+                    @keyup.enter="endRename"
+                ></v-text-field>
+                <span v-else>{{gateway.name}}</span>
+                <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">
                     <v-icon>mdi-settings</v-icon>
                 </v-btn>
             </div>
@@ -13,25 +23,22 @@
         <v-scroll-y-transition>
             <div class="context-menu" v-if="ctxMenu">
                 <v-list>
-                    <v-list-item link to="/">
-                        <v-list-item-title>Создать новый шлюз</v-list-item-title>
+                    <v-list-item link>
+                        <v-list-item-title @click.prevent="startRename">Переименовать шлюз</v-list-item-title>
                     </v-list-item>
-                    <v-list-item link :to="{ name: 'gateways-id', params: { id: gateway._id } }" @click="ctxMenu = false">
-                        <v-list-item-title>Настроить шлюз</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item>
-                        <v-list-item-title>Переименовать шлюз</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item>
-                        <v-list-item-title>Удалить шлюз</v-list-item-title>
+                    <v-list-item link>
+                        <v-list-item-title @click.prevent="deleteClick">Удалить шлюз</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </div>
         </v-scroll-y-transition>
     </v-list-item>
+
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+    import utils from "../../utils/Utils";
     export default {
         props: {
             gateway: {
@@ -43,57 +50,131 @@
         },
         data() {
             return {
-                ctxMenu: false
+                ctxMenu: false,
+                editing: false,
+                loading: false,
+                name: '',
             }
         },
         methods: {
+            ...mapActions({
+                deleteGateway: 'gateways/deleteGateway',
+                updateGateway: 'gateways/updateGateway'
+            }),
+            onListItemClick(e) {
+                if (this.$refs.settingsButton.$el.contains(e.target)) {
+                    return;
+                } else {
+                    this.ctxMenu = false;
+                    this.$router.push({name: 'gateways-id', params: {id: this.gateway._id}});
+                }
+            },
             closeContextMenu(e) {
                 if (!this.$el.contains(e.target)) {
                     this.ctxMenu = false
                 }
+            },
+            startRename() {
+                this.name = this.gateway.name;
+                this.editing = true;
+                this.ctxMenu = false;
+                this.$nextTick(() => {
+                    this.$refs.nameInput.focus();
+                });
+            },
+
+            async endRename() {
+                this.loading = true;
+                this.ctxMenu = false;
+                await this.tryUpdate(this.gateway._id, {name: this.name});
+                this.loading = false;
+                this.editing = false;
+            },
+
+            async deleteClick(){
+                let confirmation = confirm(`Вы действительно хотете удалить ${this.gateway.name}`)
+                if(confirmation){
+                    await this.tryDelete(this.gateway._id);
+                }
+                this.ctxMenu = false;
+            },
+
+            async tryUpdate(id, data) {
+                try {
+                    if(data.name === '') return ;
+                    await this.updateGateway({id: id, options: utils.normalizeBeforeSend(data)});
+                } catch (e) {
+                    this.$emit('error', e);
+                    alert(`Произошл ошибка.`)
+                }
+            },
+
+            async tryDelete(id) {
+                try {
+                    await this.deleteGateway(id);
+                    this.$router.push('/gateways')
+                } catch (e) {
+                    this.$emit('error',e);
+                    alert(`Произошла ошибка.`)
+                }
             }
         },
         mounted() {
-            if(typeof document !== 'undefined') {
+            if (typeof document !== 'undefined') {
                 document.addEventListener('mouseup', this.closeContextMenu);
             }
+        },
+        beforeDestroy() {
+            document.removeEventListener('mouseup', this.closeContextMenu);
         }
     }
 </script>
 
 <style lang="scss">
-    .menu-item{
+    .menu-item {
         position: relative;
-        .item{
+
+        .item {
             display: block;
             padding: 0;
-            .menu-item-link{
+
+            .menu-item-link {
                 text-decoration: none;
-                color: rgba(0,0,0,.87);
+                color: rgba(0, 0, 0, .87);
                 display: flex;
                 height: 100%;
                 width: 100%;
                 align-items: center;
             }
-            .item-wrap{
+
+            .item-wrap {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 height: 48px;
             }
-            .item-span{
+
+            .v-list-item--active {
+                color: salmon;
+            }
+        ;
+
+            .item-span {
                 flex: initial;
             }
-            .icon-button{
+
+            .icon-button {
                 opacity: 0;
             }
-            &:hover{
-                .icon-button{
+
+            &:hover {
+                .icon-button {
                     opacity: 1;
                 }
             }
         }
-        .context-menu{
+
+        .context-menu {
             top: 34px;
             left: 20px;
             position: absolute;
