@@ -44,11 +44,11 @@
     }
 </script>
 
-<style scoped>
-    @media screen and (min-width:79em) {
-        .sticky{
-            position: sticky;
-            top: 84px;
-        }
+<style scoped lang="scss">
+    @media screen and (min-width: 1264px) {
+        .sticky {
+                position: sticky;
+                top: 84px;
+        };
     }
 </style>
