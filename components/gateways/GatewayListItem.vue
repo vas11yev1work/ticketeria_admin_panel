@@ -108,11 +108,11 @@
                     alert(`Произошл ошибка.`)
                 }
             },
-
             async tryDelete(id) {
                 try {
                     await this.deleteGateway(id);
-                    this.$router.push('/gateways')
+                    if(id === this.$route.params.id)
+                        this.$router.push('/gateways')
                 } catch (e) {
                     this.$emit('error',e);
                     alert(`Произошла ошибка.`)

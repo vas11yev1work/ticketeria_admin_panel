@@ -56,7 +56,8 @@
             this.fetchGateways();
         },
         beforeRouteLeave(to, from, next) {
-            if(JSON.stringify(utils.normalizeBeforeSend(this.$refs.gateEditor.gateway)) === JSON.stringify(utils.normalizeBeforeSend(this.gateway))) {
+            if((this.$refs.gateEditor === undefined || this.gateway === undefined)
+                ||(JSON.stringify(utils.normalizeBeforeSend(this.$refs.gateEditor.gateway)) === JSON.stringify(utils.normalizeBeforeSend(this.gateway)))) {
                 next();
             }else{
                 let confirmation = confirm('У вас есть не сохранненные изменения. Продолжить?');
@@ -100,17 +101,20 @@
                 this.processing = false;
             },
             async tryDelete() {
-                try {
-                    this.processing = true;
-                    await this.deleteGateway(this.$route.params.id);
-                    this.$router.push('/gateways')
-                } catch (e) {
-                    this.$emit('error', e);
-                    await this.$vuetify.goTo(0);
-                    this.alert.shown = true;
-                    this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
+                let confirmation = confirm(`Вы действительно хотете удалить ${this.gateway.name}`)
+                if(confirmation) {
+                    try {
+                        this.processing = true;
+                        await this.deleteGateway(this.$route.params.id);
+                        this.$router.push('/gateways')
+                    } catch (e) {
+                        this.$emit('error', e);
+                        await this.$vuetify.goTo(0);
+                        this.alert.shown = true;
+                        this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
+                    }
+                    this.processing = false;
                 }
-                this.processing = false;
             },
             async checkConnection(){
                 this.checkResult.loading=true;
