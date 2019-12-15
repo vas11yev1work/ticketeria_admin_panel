@@ -13,8 +13,8 @@
                     solo
                     @blur="endRename"
                     @keyup.enter="endRename"
-                ></v-text-field>
-                <span v-else>{{gateway.name}}</span>
+                    class="edit-field"/>
+                <span v-else class="gateway-title">{{gateway.name}}</span>
                 <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">
                     <v-icon>mdi-settings</v-icon>
                 </v-btn>
@@ -23,11 +23,11 @@
         <v-scroll-y-transition>
             <div class="context-menu" v-if="ctxMenu">
                 <v-list>
-                    <v-list-item link>
-                        <v-list-item-title @click.prevent="startRename">Переименовать шлюз</v-list-item-title>
+                    <v-list-item link @click.prevent="startRename">
+                        <v-list-item-title>Переименовать шлюз</v-list-item-title>
                     </v-list-item>
-                    <v-list-item link>
-                        <v-list-item-title @click.prevent="deleteClick">Удалить шлюз</v-list-item-title>
+                    <v-list-item link @click.prevent="deleteClick">
+                        <v-list-item-title>Удалить шлюз</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </div>
@@ -131,9 +131,15 @@
 </script>
 
 <style lang="scss">
+    .gateway-title{
+        white-space: nowrap;
+        width: calc(100% - 40px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 15px;
+    }
     .menu-item {
         position: relative;
-
         .item {
             display: block;
             padding: 0;
@@ -181,6 +187,12 @@
             border-radius: 5px;
             z-index: 99;
             box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        }
+    }
+    .edit-field{
+        transform: translateY(15px);
+        .v-input__slot{
+            background-color: transparent !important;
         }
     }
 </style>

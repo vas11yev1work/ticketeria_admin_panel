@@ -93,7 +93,7 @@
                     this.$router.push('/gateways')
                 } catch (e) {
                     this.$emit('error', e);
-                    this.$vuetify.goTo(0);
+                    await this.$vuetify.goTo(0);
                     this.alert.shown = true;
                     this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
                 }
@@ -106,7 +106,7 @@
                     this.$router.push('/gateways')
                 } catch (e) {
                     this.$emit('error', e);
-                    this.$vuetify.goTo(0);
+                    await this.$vuetify.goTo(0);
                     this.alert.shown = true;
                     this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
                 }
@@ -120,13 +120,10 @@
                     this.checkResult.status = status;
                 }catch (e) {
                     this.checkResult.error = true;
-                    switch (e.type) {
-                        case 'response':
-                            this.checkResult.status = e.error.status;
-                            break;
-                        default:
-                            this.checkResult.status = 'проблемы с подключением, проверьте интернет';
-                            break;
+                    if (e.type === 'response') {
+                        this.checkResult.status = e.error.status;
+                    } else {
+                        this.checkResult.status = 'проблемы с подключением, проверьте интернет';
                     }
                 }finally {
                     this.checkResult.loading = false;
