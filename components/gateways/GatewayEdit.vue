@@ -120,7 +120,7 @@
                             indeterminate
                             color="white"
                             class="mr-2"
-                        ></v-progress-circular>
+                        />
                         Проверить подключение
                     </v-btn>
                     <span>

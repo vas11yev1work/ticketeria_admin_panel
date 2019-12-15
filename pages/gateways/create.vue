@@ -66,7 +66,7 @@
                     this.$router.push('/gateways')
                 }catch (e) {
                     this.$emit('error', e);
-                    this.$vuetify.goTo(0);
+                    await this.$vuetify.goTo(0);
                     this.alert.shown = true;
                     this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
                 }

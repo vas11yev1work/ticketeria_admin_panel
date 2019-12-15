@@ -23,6 +23,12 @@
         <v-scroll-y-transition>
             <div class="context-menu" v-if="ctxMenu">
                 <v-list>
+                    <v-list-item link @click.prevent="redirect('/gateways/create')">
+                        <v-list-item-title>Создать новый шлюз</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link @click.prevent="redirect(`/gateways/${gateway._id}`)">
+                        <v-list-item-title>Настроить шлюз</v-list-item-title>
+                    </v-list-item>
                     <v-list-item link @click.prevent="startRename">
                         <v-list-item-title>Переименовать шлюз</v-list-item-title>
                     </v-list-item>
@@ -73,6 +79,10 @@
                 if (!this.$el.contains(e.target)) {
                     this.ctxMenu = false
                 }
+            },
+            redirect(url) {
+                this.$router.push(url);
+                this.ctxMenu = false;
             },
             startRename() {
                 this.name = this.gateway.name;
