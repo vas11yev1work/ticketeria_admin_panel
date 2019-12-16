@@ -28,6 +28,11 @@
                         <v-list-item-title>Управление шлюзами</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item v-if="isAuthenticated" link to="/auth/sign-out">
+                    <v-list-item-content>
+                        <v-list-item-title>Выйти</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-content>
@@ -37,11 +42,18 @@
 </template>
 
 <script>
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+
     export default {
         data() {
             return {
                 drawer: true
             }
-        }
+        },
+        computed: {
+            ...mapGetters({
+                isAuthenticated: 'isAuthenticated',
+            }),
+        },
     }
 </script>

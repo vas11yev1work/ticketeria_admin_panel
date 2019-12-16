@@ -55,9 +55,10 @@
         async mounted() {
             this.fetchGateways();
         },
-        beforeRouteLeave(to, from, next) {
+        beforeRouteUpdate(to, from, next) {
             if((this.$refs.gateEditor === undefined || this.gateway === undefined)
                 ||(JSON.stringify(utils.normalizeBeforeSend(this.$refs.gateEditor.gateway)) === JSON.stringify(utils.normalizeBeforeSend(this.gateway)))) {
+                console.log('no changes')
                 next();
             }else{
                 let confirmation = confirm('У вас есть не сохранненные изменения. Продолжить?');

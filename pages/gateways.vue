@@ -16,6 +16,7 @@
     import utils from '../utils/Utils';
     export default {
         name: 'gatewayLayout',
+        middleware: 'authenticated',
         components: {
             GatewaySideMenu: () => import('../components/gateways/GatewaySideMenu.vue'),
         },

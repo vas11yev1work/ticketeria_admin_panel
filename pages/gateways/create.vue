@@ -8,7 +8,7 @@
                 Произошла ошибка: {{alert.text}}
             </v-alert>
         </div>
-        <GatewayEdit @input="onInput" :disabled="processing"/>
+        <GatewayEdit @input="onInput" :checkResult="checkResult" :disabled="processing" />
     </v-col>
 </template>
 
@@ -28,6 +28,11 @@
                     shown: false,
                     text: true
                 },
+                checkResult: {
+                    loading: false,
+                    status: '',
+                    error: false
+                },
                 processing: false,
             }
         },
@@ -44,6 +49,7 @@
         beforeDestroy(){
 
         },
+
         methods:{
             ...mapActions({
                 fetchGateways: 'gateways/fetchGateways',
@@ -52,10 +58,16 @@
             async onInput(event) {
                 switch (event.type) {
                     case 'save':
-                        await this.tryCreate(event.data);
+                        await this.tryUpdate(event.data);
                         break;
                     case 'cancel':
                         this.$router.push('/gateways');
+                        break;
+                    case 'delete':
+                        this.$router.push('/gateways');
+                        break;
+                    case 'checkConnection':
+                        await this.checkConnection();
                         break;
                 }
             },
@@ -71,6 +83,23 @@
                     this.alert.text = e.error.status === 405 ? 'неправильный ввод' : `код ${e.error.status}`; //Перенести в отдельны обработчик ошибок, единый для всех;
                 }
                 this.processing = false;
+            },
+            async checkConnection(){
+                this.checkResult.loading=true;
+                try {
+                    let {status, data} = await this.$axios.get('/api/v50/gates');
+                    this.checkResult.error = false;
+                    this.checkResult.status = status;
+                }catch (e) {
+                    this.checkResult.error = true;
+                    if (e.type === 'response') {
+                        this.checkResult.status = e.error.status;
+                    } else {
+                        this.checkResult.status = 'проблемы с подключением, проверьте интернет';
+                    }
+                }finally {
+                    this.checkResult.loading = false;
+                }
             }
         }
     }
