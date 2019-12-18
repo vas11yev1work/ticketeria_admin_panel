@@ -52,6 +52,7 @@ export default {
     axios: {
         proxy: true,
         headers: {'Cache-Control': 'no-cache'},
+        baseURL: 'https://dev.ticketeria.es/'
     },
     proxy: {
         '/api/': 'https://ticketeria.es/',

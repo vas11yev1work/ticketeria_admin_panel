@@ -50,6 +50,7 @@
                 drawer: true
             }
         },
+        middleware: 'authenticated',
         computed: {
             ...mapGetters({
                 isAuthenticated: 'isAuthenticated',

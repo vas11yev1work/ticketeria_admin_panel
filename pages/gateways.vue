@@ -5,7 +5,7 @@
                 <v-col class="col-12" lg="3">
                     <GatewaySideMenu :gateways="gatewayList"/>
                 </v-col>
-                <nuxt-child></nuxt-child>
+                <nuxt-child/>
             </v-row>
         </v-container>
     </div>

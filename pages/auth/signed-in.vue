@@ -5,6 +5,7 @@
 <script>
     import { setToken, checkSecret, extractInfoFromHash } from '~/utils/auth'
     export default {
+        layout: 'auth',
         mounted () {
             const { token, secret } = extractInfoFromHash()
             if (!checkSecret(secret) || !token) {

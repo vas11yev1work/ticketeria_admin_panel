@@ -7,6 +7,7 @@
 
     export default {
         middleware: 'anonymous',
+        layout: 'auth',
         mounted () {
             showLogin('auth0')
         }
