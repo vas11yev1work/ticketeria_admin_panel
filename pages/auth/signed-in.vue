@@ -7,11 +7,11 @@
     export default {
         layout: 'auth',
         mounted () {
-            const { token, secret } = extractInfoFromHash()
+            const { token, secret } = extractInfoFromHash();
             if (!checkSecret(secret) || !token) {
                 console.error('Something happened with the Sign In request')
             }
-            setToken(token)
+            setToken(token);
             this.$router.replace('/')
         }
     }
