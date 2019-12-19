@@ -58,7 +58,7 @@
             async onInput(event) {
                 switch (event.type) {
                     case 'save':
-                        await this.tryUpdate(event.data);
+                        await this.tryCreate(event.data);
                         break;
                     case 'cancel':
                         this.$router.push('/gateways');
