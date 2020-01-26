@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import IndexRequireParams from "../components/index/IndexRequireParams";
+    import IndexRequireParams from "../components/index/StreamParams";
     import {mapGetters, mapActions} from 'vuex';
 
     export default {

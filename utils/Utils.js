@@ -1,14 +1,14 @@
 export default {
-    normalizeBeforeSend(object){
+    normalizeBeforeSend(object) {
         let temp = {};
-        for(let key in object){
-            if(key !== '_id')
+        for (let key in object) {
+            if (key !== '_id')
                 temp[key] = new String(object[key]);
         }
         return temp;
     },
 
-    generateErrorText(error){
+    generateErrorText(error) {
         let msg = '';
         switch (error.type) {
             case 'response':
