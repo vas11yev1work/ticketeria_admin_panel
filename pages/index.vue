@@ -10,9 +10,9 @@
                         <h1 class="headline font-weight-medium">Создание нового потока импорта</h1>
                     </div>
                     <div class="description">
-                        <p class="grey--text">
+                        <h3 class="black--text">
                             Обязательные параметры
-                        </p>
+                        </h3>
                     </div>
                     <v-form>
                         <div class="fields mt-2">
