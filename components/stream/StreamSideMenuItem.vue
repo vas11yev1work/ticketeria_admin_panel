@@ -15,23 +15,23 @@
                     @keyup.enter="endRename"
                     class="edit-field"/>
                 <span v-else class="gateway-title">{{stream.name}}</span>
-                <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">
-                    <v-icon>mdi-settings</v-icon>
-                </v-btn>
+<!--                <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">-->
+<!--                    <v-icon>mdi-settings</v-icon>-->
+<!--                </v-btn>-->
             </div>
         </v-list-item-content>
-        <v-scroll-y-transition>
-            <div class="context-menu" v-if="ctxMenu">
-                <v-list>
-                    <v-list-item link @click.prevent="startRename">
-                        <v-list-item-title>Переименовать поток</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link @click.prevent="deleteClick">
-                        <v-list-item-title>Удалить поток</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </div>
-        </v-scroll-y-transition>
+<!--        <v-scroll-y-transition>-->
+<!--            <div class="context-menu" v-if="ctxMenu">-->
+<!--                <v-list>-->
+<!--                    <v-list-item link @click.prevent="startRename">-->
+<!--                        <v-list-item-title>Переименовать поток</v-list-item-title>-->
+<!--                    </v-list-item>-->
+<!--                    <v-list-item link @click.prevent="deleteClick">-->
+<!--                        <v-list-item-title>Удалить поток</v-list-item-title>-->
+<!--                    </v-list-item>-->
+<!--                </v-list>-->
+<!--            </div>-->
+<!--        </v-scroll-y-transition>-->
     </v-list-item>
 </template>
 
@@ -61,12 +61,12 @@
                 updateGateway: 'gateways/updateGateway'
             }),
             onListItemClick(e) {
-                if (this.$refs.settingsButton.$el.contains(e.target)) {
-                    return;
-                } else {
+                // if (this.$refs.settingsButton.$el.contains(e.target)) {
+                //     return;
+                // } else {
                     this.ctxMenu = false;
                     this.$router.push({name: 'import-streams-id', params: {id: this.stream._id}});
-                }
+                //}
             },
             closeContextMenu(e) {
                 if (!this.$el.contains(e.target)) {
