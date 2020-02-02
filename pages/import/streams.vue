@@ -10,13 +10,11 @@
 </template>
 
 <script>
-    import IndexRequireParams from "~/components/stream/StreamParams";
     import StreamSideMenu from "~/components/stream/StreamSideMenu";
     import {mapGetters, mapActions} from 'vuex';
 
     export default {
         components: {
-            IndexRequireParams,
             StreamSideMenu
         },
         computed: {

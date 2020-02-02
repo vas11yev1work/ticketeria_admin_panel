@@ -2,7 +2,7 @@
     <v-form ref="gateway">
         <div class="fields mt-2">
             <v-row>
-                <v-col cols="12">
+                <v-col cols="7">
                     <v-text-field
                         label="Название шлюза"
                         required
@@ -20,20 +20,20 @@
                 <v-col cols="6">
                     <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"/>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="7">
                     <v-select
                         :items="methodsTypesItems"
                         label="Метод HTTP"
                         v-model="gateway.httpMethod">
                     </v-select>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         label="Основной URL API"
                         v-model="gateway.apiUrl">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         hint="Введите параметр API для определения страны события"
                         label="Страна импортируемых событий"
@@ -41,7 +41,7 @@
                         v-model="gateway.apiParamsCountry">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         hint="Введите параметр API для определения города события"
                         label="Город импортируемых событий"
@@ -49,7 +49,7 @@
                         v-model="gateway.apiParamsCity">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         hint="Введите параметр API для определения места события"
                         label="Местро импортируемых событий"
@@ -57,7 +57,7 @@
                         v-model="gateway.apiParamsPlace">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         hint="Введите параметр API для определения языковой версии"
                         label="Языковая версия"
@@ -65,7 +65,7 @@
                         v-model="gateway.apiParamsLanguage">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         hint="Введите параметр API для определения валюты"
                         label="Валюта"
@@ -73,33 +73,34 @@
                         v-model="gateway.apiParamsCurrency">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-textarea
                         label="URL с параметрами выборки"
                         no-resize
+                        outlined
                         v-model="gateway.apiParamsUrl">
                     </v-textarea>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-select
                         :items="authTypesItems"
                         label="Способ авторизации"
                         v-model="gateway.apiParamsAuthType">
                     </v-select>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         label="Логин(если есть)"
                         v-model="gateway.apiParamsAuthLogin">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         label="Пароль (если есть)"
                         v-model="gateway.apiParamsAuthPassword">
                     </v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="9">
                     <v-text-field
                         label="Токен"
                         v-model="gateway.apiParamsAuthToken">

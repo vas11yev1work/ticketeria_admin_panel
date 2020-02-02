@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-auto p-0 pt-0 pb-2 sticky" flat oncontextmenu="return false">
         <v-toolbar dense>
-            <v-toolbar-title>Шлюзы</v-toolbar-title>
+            <v-toolbar-title>Все шлюзы</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="$router.push('/gateways/create')">
                 <v-icon>mdi-plus-circle-outline</v-icon>
