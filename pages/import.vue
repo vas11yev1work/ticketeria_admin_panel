@@ -1,5 +1,7 @@
 <template>
-
+    <div class="index-page">
+        <nuxt-child/>
+    </div>
 </template>
 
 <script>

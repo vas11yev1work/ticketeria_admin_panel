@@ -1,6 +1,6 @@
 <template>
     <v-list-item link @click.right="ctxMenu = !ctxMenu" class="menu-item"
-                 :class="this.$route.params.id === gateway._id ? 'v-list-item--active' : ''">
+                 :class="this.$route.params.id === stream._id ? 'v-list-item--active' : ''">
         <v-list-item-content @click="onListItemClick" class="item">
             <div class="item-wrap">
                 <v-text-field
@@ -14,7 +14,7 @@
                     @blur="endRename"
                     @keyup.enter="endRename"
                     class="edit-field"/>
-                <span v-else class="gateway-title">{{gateway.name}}</span>
+                <span v-else class="gateway-title">{{stream.name}}</span>
                 <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">
                     <v-icon>mdi-settings</v-icon>
                 </v-btn>
@@ -23,17 +23,11 @@
         <v-scroll-y-transition>
             <div class="context-menu" v-if="ctxMenu">
                 <v-list>
-                    <v-list-item link @click.prevent="redirect('/gateways/create')">
-                        <v-list-item-title>Создать новый шлюз</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item link @click.prevent="redirect(`/gateways/${gateway._id}`)">
-                        <v-list-item-title>Настроить шлюз</v-list-item-title>
-                    </v-list-item>
                     <v-list-item link @click.prevent="startRename">
-                        <v-list-item-title>Переименовать шлюз</v-list-item-title>
+                        <v-list-item-title>Переименовать поток</v-list-item-title>
                     </v-list-item>
                     <v-list-item link @click.prevent="deleteClick">
-                        <v-list-item-title>Удалить шлюз</v-list-item-title>
+                        <v-list-item-title>Удалить поток</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </div>
@@ -46,7 +40,7 @@
     import utils from "../../utils/Utils";
     export default {
         props: {
-            gateway: {
+            stream: {
                 type: Object,
                 default() {
                     return {}
@@ -71,7 +65,7 @@
                     return;
                 } else {
                     this.ctxMenu = false;
-                    this.$router.push({name: 'gateways-id', params: {id: this.gateway._id}});
+                    this.$router.push({name: 'import-streams-id', params: {id: this.stream._id}});
                 }
             },
             closeContextMenu(e) {

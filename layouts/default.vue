@@ -18,7 +18,7 @@
                         <v-list-item-title>Площадки</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item link to="/">
+                <v-list-item link to="/import">
                     <v-list-item-content>
                         <v-list-item-title>Импорт</v-list-item-title>
                     </v-list-item-content>

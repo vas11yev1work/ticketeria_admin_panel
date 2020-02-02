@@ -1,25 +1,31 @@
 {
-  "name": "ticketeria_admin",
-  "version": "1.0.0",
-  "description": "My epic Nuxt.js project",
-  "author": "vas11yev1work",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  },
-  "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
-    "auth0-js": "^9.11.3",
-    "auth0-lock": "^11.20.0",
-    "eventsource-polyfill": "^0.9.6",
-    "js-cookie": "latest",
-    "jwt-decode": "^2.2.0",
-    "nuxt": "^2.0.0"
-  },
-  "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0"
-  }
+    "name": "ticketeria_admin",
+    "version": "1.0.0",
+    "description": "My epic Nuxt.js project",
+    "author": "vas11yev1work",
+    "private": true,
+    "config": {
+        "nuxt": {
+            "host": "192.168.1.68",
+            "port": "3000"
+        }
+    },
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.3.6",
+        "auth0-js": "^9.11.3",
+        "auth0-lock": "^11.20.0",
+        "eventsource-polyfill": "^0.9.6",
+        "js-cookie": "latest",
+        "jwt-decode": "^2.2.0",
+        "nuxt": "^2.0.0"
+    },
+    "devDependencies": {
+        "@nuxtjs/vuetify": "^1.0.0"
+    }
 }

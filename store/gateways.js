@@ -30,9 +30,9 @@ export const actions = {
             if (error.response) {
                 commit('setLastError', {type: 'response', error: error.response.data}, {root: true})
             }else if(error.request){
-                commit('setLastError', {type: 'request', error: error.request})
+                commit('setLastError', {type: 'request', error: error.request}, {root: true})
             }else{
-                console.log('Error', {type: 'left', error: error.message});
+                console.log('Error', {type: 'left', error: error.message}, {root: true});
             }
         }
 

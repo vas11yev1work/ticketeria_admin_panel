@@ -5,6 +5,10 @@ export default {
     /*
     ** Headers of the page
     */
+    server: {
+        port: 3000, // default: 3000
+        host: '192.168.1.68', // default: localhost
+    },
     router: {
         middleware: 'check-auth'
     },
