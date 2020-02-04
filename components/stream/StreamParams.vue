@@ -82,13 +82,13 @@
             <v-row v-for="(field, id) in fdata.fixies">
                 <v-col cols="0">
                     <v-text-field
-                        v-if="field.key !== 'timezone'"
+                        v-if="selectItems.fixiesDataFields.find(x=>x.value===field.key).select !== true"
                         v-model="fdata.fixies[id].value"
                         :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
                     </v-text-field>
                     <v-select
                         v-else
-                        :items="selectItems.timeZone"
+                        :items="selectItems.fixiesDataFields.find(x=>x.value===field.key).items"
                         v-model="fdata.fixies[id].value"
                         :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
                     </v-select>
@@ -246,7 +246,7 @@
 </template>
 
 <script>
-    import {timezonesList} from '~/utils/data'
+    import {timezonesList, dateTimeFormats} from '~/utils/data'
 
     export default {
         props: {
@@ -312,7 +312,6 @@
                         {text: 'Ежеднвено', value: 'daily'},
                         {text: 'Еженедельно', value: 'weekly'},
                     ],
-                    timeZone: timezonesList,
                     time: {
                         hours: [
                             { value: 0, text: '00'},
@@ -353,8 +352,8 @@
                         {value: "venueName", text: "Место импортируемых событий", checkboxText: "Проставлять это место, в случае отсутствия данных о месте"},
                         {value: "venueCountry", text: "Страна импортируемых событий", checkboxText: "Проставлять эту страну в случае отсутствия данных о стране"},
                         {value: "currency", text: "Валюта импортируемых событий", checkboxText: "Проставлять эту валюту в случае отсутствия данных о валюте"},
-                        {value: "timezone", text: "Часовой пояс импортируемых событий", checkboxText: "Проставлять этот часовой пояс в случае отсутствия данных о часовом поясе"},
-                        {value: "timeFormat", text: "Формат даты и времени событий", checkboxText: "Преобразовать все эвенты в выбранный формат"},
+                        {value: "timezone", text: "Часовой пояс импортируемых событий", checkboxText: "Проставлять этот часовой пояс в случае отсутствия данных о часовом поясе", select: true, items: timezonesList},
+                        {value: "timeFormat", text: "Формат даты и времени событий", checkboxText: "Преобразовать все эвенты в выбранный формат", select: true, items: dateTimeFormats},
                     ],
                     customNoAccessFields: [
                         {value: "removeFromSite", text: "Убрать с сайта", input: false},
