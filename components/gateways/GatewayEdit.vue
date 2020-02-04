@@ -1,7 +1,7 @@
 <template>
     <v-form ref="gateway">
         <div class="fields mt-2">
-            <v-row>
+            <v-row class="additional-setting">
                 <v-col cols="7">
                     <v-text-field
                         label="Название шлюза"
@@ -269,5 +269,11 @@
 </script>
 
 <style scoped>
-
+    .additional-setting {
+        padding: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        max-width: 100%;
+    }
 </style>
