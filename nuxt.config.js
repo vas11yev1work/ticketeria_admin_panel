@@ -56,10 +56,13 @@ export default {
     axios: {
         proxy: true,
         headers: {'Cache-Control': 'no-cache'},
-        baseURL: 'https://dev.ticketeria.es/'
     },
     proxy: {
-        '/api/': 'https://ticketeria.es/',
+        '/api/': {
+            target: 'https://v3.ticketeria.es/',
+            secure: true,
+            changeOrigin: true
+        },
     },
     /*
     ** vuetify module configuration

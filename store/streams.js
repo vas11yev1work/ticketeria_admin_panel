@@ -19,7 +19,7 @@ export const mutations = {
         if(index !== -1)
             Object.assign(state.streamsList[index], data);
     },
-    deleteStream(){
+    deleteStream(state, id){
         let index = state.streamsList.findIndex(x=>x._id === id);
         if(index !== -1)
             state.streamsList.splice(index, 1);
@@ -47,8 +47,10 @@ export const actions = {
     },
     async updateStream(context, {id, pdata}){
         try {
+            let temp = pdata;
+            delete temp['_id'];
             let {data} = await this.$axios.$put(`/api/v50/streams/${id}`, pdata);
-            context.commit('setStream', data);
+            context.commit('setStream', {id, data});
         }catch (e) {
             throw networkErrorHandler(e, context);
         }
