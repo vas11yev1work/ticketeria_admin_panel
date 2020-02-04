@@ -197,12 +197,28 @@
                             <v-icon>mdi-minus-circle-outline</v-icon>
                         </v-btn>
 
-                        <v-col cols="4" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['input'] === true)">
+                        <v-col cols="1" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true)">
+                            <v-select
+                                :items="selectItems.inputConditions"
+                                v-model="fdata.actions.dublicateEvents[id]['inputAction']"
+                                label="Условие">
+                            </v-select>
+                        </v-col>
+
+                        <v-col cols="2" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['input'] === true)">
                             <v-text-field
                                 :items="selectItems.customDuplicateFields"
                                 v-model="fdata.actions.dublicateEvents[id].value"
                                 label="Параметры">
                             </v-text-field>
+                        </v-col>
+
+                        <v-col cols="3" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true)">
+                            <v-select
+                                :items="selectItems.outputActions"
+                                v-model="fdata.actions.dublicateEvents[id]['outputAction']"
+                                label="Действие">
+                            </v-select>
                         </v-col>
                     </v-row>
                     <v-icon class="arrow-down mb-4" v-if="fdata.actions.dublicateEvents.length-1 !== id" >mdi-arrow-down-bold-circle-outline</v-icon>
@@ -349,7 +365,15 @@
                         {value: "setFromStreamInsteadOfDuplicate", text: "Выставить событие из этого потока, вместо дубля", input: true},
                         {value: "setFromStreamInsteadOfDuplicateIfNotOnSite", text: "Выставить событие из этого потока, вместо дубля, если дубль не на сайте", input: true},
                         {value: "keepInWarehouse",text: "Оставить найденное событие на складе с пометкой \"Дубль\"",input: true},
-                        {value: "changeLinkIfLargerFee", text: "Если комиссия источника потока больше, заменить ссылку", input: true},
+                        {value: "ifFee", text: "Если комиссия источника потока", input: true,extendedInput: true},
+                    ],
+                    inputConditions:[
+                        "=",
+                        ">",
+                        "<"
+                    ],
+                    outputActions:[
+                        {value: "replaceLink", text: "Заменить ссылку"},
                     ]
                 },
                 workingTime: {
@@ -402,6 +426,17 @@
         watch:{
             fdata: {
                 handler: function(newValue){
+                    newValue.actions.dublicateEvents.forEach(item => {
+                        let ev = this.selectItems.customDuplicateFields.find(x => x.value === item.key);
+                        if(typeof ev !== 'undefined' && ev.extendedInput !== true){
+                            if(item.outputAction !== undefined || item.inputAction !== undefined){
+                                delete item.outputAction;
+                                delete item.inputAction;
+                            }
+
+                        }
+                        console.log(ev)
+                    });
                     this.$emit('input',newValue)
                 },
                 deep: true
