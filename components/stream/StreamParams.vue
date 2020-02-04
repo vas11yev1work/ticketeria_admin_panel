@@ -23,7 +23,7 @@
         <v-col cols="11">
             <v-row>
                 <v-col cols="0">
-                    <v-switch label="Расписание запуска" v-model="fdata.isPeriodical"></v-switch>
+                    <v-switch label="Расписание запуска" v-model="fdata.isPeriodical"/>
                 </v-col>
             </v-row>
             <v-row v-if="fdata.isPeriodical">
@@ -304,7 +304,13 @@
             return {
                 selectItems: {
                     periodicity: [
-                        {text: 'Ежеднвено', value: 'daily'}
+                        {text: '15 минут', value: '15m'},
+                        {text: '30 минут', value: '30m'},
+                        {text: '1 час', value: '1h'},
+                        {text: '2 часа', value: '2h'},
+                        {text: '3 часа', value: '3h'},
+                        {text: 'Ежеднвено', value: 'daily'},
+                        {text: 'Еженедельно', value: 'weekly'},
                     ],
                     timeZone: timezonesList,
                     time: {
