@@ -1,113 +1,103 @@
 <template>
     <v-form ref="gateway">
         <div class="fields mt-2">
-            <v-row class="additional-setting">
-                <v-col cols="7">
-                    <v-text-field
-                        label="Название шлюза"
-                        required
-                        :rules="rules.nameRules"
-                        v-model="gateway.name">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="6">
-                    <v-select
-                        :items="dataTypesItems"
-                        label="Тип данных"
-                        v-model="gateway.dataType">
-                    </v-select>
-                </v-col>
-                <v-col cols="6">
-                    <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"/>
-                </v-col>
-                <v-col cols="7">
-                    <v-select
-                        :items="methodsTypesItems"
-                        label="Метод HTTP"
-                        v-model="gateway.httpMethod">
-                    </v-select>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        label="Основной URL API"
-                        v-model="gateway.apiUrl">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        hint="Введите параметр API для определения страны события"
-                        label="Страна импортируемых событий"
-                        persistent-hint
-                        v-model="gateway.apiParamsCountry">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        hint="Введите параметр API для определения города события"
-                        label="Город импортируемых событий"
-                        persistent-hint
-                        v-model="gateway.apiParamsCity">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        hint="Введите параметр API для определения места события"
-                        label="Местро импортируемых событий"
-                        persistent-hint
-                        v-model="gateway.apiParamsPlace">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        hint="Введите параметр API для определения языковой версии"
-                        label="Языковая версия"
-                        persistent-hint
-                        v-model="gateway.apiParamsLanguage">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        hint="Введите параметр API для определения валюты"
-                        label="Валюта"
-                        persistent-hint
-                        v-model="gateway.apiParamsCurrency">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-textarea
-                        label="URL с параметрами выборки"
-                        no-resize
-                        outlined
-                        v-model="gateway.apiParamsUrl">
-                    </v-textarea>
-                </v-col>
-                <v-col cols="9">
-                    <v-select
-                        :items="authTypesItems"
-                        label="Способ авторизации"
-                        v-model="gateway.apiParamsAuthType">
-                    </v-select>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        label="Логин(если есть)"
-                        v-model="gateway.apiParamsAuthLogin">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        label="Пароль (если есть)"
-                        v-model="gateway.apiParamsAuthPassword">
-                    </v-text-field>
-                </v-col>
-                <v-col cols="9">
-                    <v-text-field
-                        label="Токен"
-                        v-model="gateway.apiParamsAuthToken">
-                    </v-text-field>
-                </v-col>
-            </v-row>
-            <v-row>
+            <div class="additional-setting">
+                <v-row>
+                    <v-col cols="7">
+                        <v-text-field
+                            label="Название шлюза"
+                            required
+                            :rules="rules.nameRules"
+                            v-model="gateway.name">
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row class="">
+                    <v-col cols="5">
+                        <v-select
+                            :items="dataTypesItems"
+                            label="Тип данных"
+                            v-model="gateway.dataType">
+                        </v-select>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-checkbox label="Используется сжатие gzip" v-model="gateway.gzip"/>
+                    </v-col>
+                    <v-col cols="5">
+                        <v-select
+                            :items="methodsTypesItems"
+                            label="Метод HTTP"
+                            v-model="gateway.httpMethod">
+                        </v-select>
+                    </v-col>
+                </v-row>
+                <v-row class="">
+                    <v-col cols="7">
+                        <v-text-field
+                            label="Основной URL API"
+                            v-model="gateway.apiUrl">
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row class="">
+                    <v-col cols="5">
+                        <v-text-field
+                            hint="Введите параметр API для определения страны события"
+                            label="Страна импортируемых событий"
+                            persistent-hint
+                            v-model="gateway.apiParamsCountry">
+                        </v-text-field>
+                        <v-text-field
+                            hint="Введите параметр API для определения города события"
+                            label="Город импортируемых событий"
+                            persistent-hint
+                            v-model="gateway.apiParamsCity">
+                        </v-text-field>
+                        <v-text-field
+                            hint="Введите параметр API для определения места события"
+                            label="Местро импортируемых событий"
+                            persistent-hint
+                            v-model="gateway.apiParamsPlace">
+                        </v-text-field>
+                        <v-text-field
+                            hint="Введите параметр API для определения языковой версии"
+                            label="Языковая версия"
+                            persistent-hint
+                            v-model="gateway.apiParamsLanguage">
+                        </v-text-field>
+                        <v-text-field
+                            hint="Введите параметр API для определения валюты"
+                            label="Валюта"
+                            persistent-hint
+                            v-model="gateway.apiParamsCurrency">
+                        </v-text-field>
+                        <v-textarea
+                            label="URL с параметрами выборки"
+                            no-resize
+                            outlined
+                            v-model="gateway.apiParamsUrl">
+                        </v-textarea>
+                        <v-select
+                            :items="authTypesItems"
+                            label="Способ авторизации"
+                            v-model="gateway.apiParamsAuthType">
+                        </v-select>
+                        <v-text-field
+                            label="Логин(если есть)"
+                            v-model="gateway.apiParamsAuthLogin">
+                        </v-text-field>
+                        <v-text-field
+                            label="Пароль (если есть)"
+                            v-model="gateway.apiParamsAuthPassword">
+                        </v-text-field>
+                        <v-text-field
+                            label="Токен"
+                            v-model="gateway.apiParamsAuthToken">
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+            </div>
+            <v-row class="mb-4 mt-4">
                 <v-col cols="12">
                     <v-btn
                         @click="checkConnection"
@@ -126,7 +116,7 @@
                     </v-btn>
                     <span>
                         <span v-if="checkResult.error === false && checkResult.status !== ''" class="status ml-4 green--text font-weight-bold">Ок! Код: {{checkResult.status}}</span>
-                        <span v-else-if="checkResult.error === true" class="status ml-4 red--text font-weight-bold">Ошибка! Код: {{checkResult.status}}</span>
+                        <span v-else-if="checkResult.error === true" class="status ml-4 red--text font-weight-bold">Ошибка! Код: {{checkResult.status}} <a href="#">Скачать log.txt</a></span>
                     </span>
                 </v-col>
             </v-row>
@@ -270,7 +260,7 @@
 
 <style scoped>
     .additional-setting {
-        padding: 5px;
+        padding: 25px 15px 25px 25px;
         box-shadow: 0 0 10px rgba(0,0,0,0.2);
         border-radius: 5px;
         margin-bottom: 10px;

@@ -9,7 +9,7 @@
             </h3>
         </div>
         <v-form>
-            <div class="fields mt-2">
+            <div class="fields mt-2 mb-2">
                 <IndexRequireParams :streamData="stream" :gateways="gatewayList" @input="onInput"/>
             </div>
         </v-form>

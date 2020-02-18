@@ -6,8 +6,9 @@
 
 <script>
     export default {
-        mounted() {
-            this.$router.push('/import/streams');
-        }
+        //
+        // mounted() {
+        //     this.$router.push('/import/streams');
+        // }
     }
 </script>

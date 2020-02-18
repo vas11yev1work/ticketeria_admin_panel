@@ -16,18 +16,19 @@
                     </v-select>
                 </v-col>
                 <v-col cols="4" class="mt-4">
-                    <nuxt-link to="/gateways">Управлять шлюзами</nuxt-link>
+                    <nuxt-link to="/gateways" target="_blank">Управлять шлюзами</nuxt-link>
                 </v-col>
             </v-row>
         </v-col>
         <v-col cols="11">
             <v-row>
                 <v-col cols="0">
-                    <v-switch label="Расписание запуска" v-model="fdata.isPeriodical"/>
+                    <v-switch label="Расписание запуска" hint="Если не задать расписание руками, то запуск потока будет выполняться 1 раз в день через 15 минут после запуска другого потока, если другого потока нет, то в 00:15 часов" :persistent-hint="true" v-model="fdata.isPeriodical"/>
                 </v-col>
             </v-row>
-            <v-row v-if="fdata.isPeriodical">
-                <v-col cols="0">
+            <v-row v-if="fdata.isPeriodical" class="mt-2">
+                <v-col class="actions-block pa-4"  cols="0">
+                    <h4>Расписание запуска</h4>
                     <v-select
                         :items="selectItems.periodicity"
                         v-model="fdata.periodicity"
@@ -59,10 +60,10 @@
                 </v-col>
             </v-row>
         </v-col>
-        <v-col cols="11">
+        <v-col cols="11" class="mb-2">
             <v-row>
                 <v-col cols="0">
-                    <v-switch label="Отображать эвенты сразу на сайте" v-model="fdata.showEventDirectly"></v-switch>
+                    <v-switch label="Отображать эвенты сразу на сайте" hint="Внимание, если вы создаёте поток впервые рекомендуется сначала грузить на склад, проверять менять настройки потока на отображение сразу на сайте." :persistent-hint="true" v-model="fdata.showEventDirectly"></v-switch>
                 </v-col>
             </v-row>
         </v-col>
@@ -73,14 +74,18 @@
             </h3>
         </div>
         <v-col class="additional-setting pa-5" cols="11"> <!--DopNastr-->
-            <v-row>
+            <v-row class="pb-3">
                 <v-col cols="0">
+                    <h4>Город и место в дублях других источников</h4>
                     <v-switch label="Проверить дубли в других источниках и проставить недостающие город или место"
+                              hint="Если город или место не были получены из API или настроек потока, можно проверить дубли"
+                              class="mt-1"
+                              :persistent-hint="true"
                               v-model="fdata.fixCities"></v-switch>
                 </v-col>
             </v-row>
             <v-row v-for="(field, id) in fdata.fixies">
-                <v-col cols="0">
+                <v-col cols="8">
                     <v-text-field
                         v-if="selectItems.fixiesDataFields.find(x=>x.value===field.key).select !== true"
                         v-model="fdata.fixies[id].value"
@@ -95,7 +100,6 @@
                     <v-switch class="ma-0" :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).checkboxText"
                               v-model="fdata.fixies[id].autofix"></v-switch>
                 </v-col>
-
             </v-row>
         </v-col>
 
@@ -121,7 +125,7 @@
 
         <v-col class="actions-block pa-5"  cols="11">
             <h3>
-                Событие не доступно у источника
+                Не присвоился тег категории
             </h3>
             <v-radio-group v-model="fdata.actions.noTagEvents">
                 <v-row>
@@ -137,6 +141,12 @@
                     </v-col>
                 </v-row>
             </v-radio-group>
+            <p>Настройка игнорируется, если поток не отображает события сразу на сайте</p>
+        </v-col>
+        <v-col class="actions-block pa-5"  cols="11">
+            <h3>
+                Событие не доступно у источника
+            </h3>
             <p style="width: 70%">По умолчанию, не доступное событие проверятеся на дубли в другом источнике и меняется ссылка партнёра, но
                 в случае отсутствия дубля или доступности у дубля, событие остаётся на сайте, но вместо возможности
                 купить появляется пометка, что билет на это событие купить нельзя.</p>
@@ -229,16 +239,22 @@
                 </v-btn>
             </div>
         </v-col>
-
+        <v-col class="actions-block pa-5"  cols="11">
+            <h3>
+                Прошедшие и старые события потока
+            </h3>
+            <p style="width: 70%">По умолчанию, если событие прошло, то оно остаётся на сайте, убирается кнопка Купить и уведомляется, что событие прошло.</p>
+        </v-col>
         <div class="description mb-3">
             <h3 class="black--text">
                 Уведомление
             </h3>
         </div>
-
         <v-col cols="11">
             <v-text-field
                 v-model="fdata.sendNotificationTo"
+                hint="Все уведомления будут отображаться в логе потока и на складе, если вы дополнительно хотите получать их на почту, то задайте её"
+                :persistent-hint="true"
                 label="E-mail для уведомлений">
             </v-text-field>
         </v-col>
