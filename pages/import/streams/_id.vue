@@ -8,14 +8,15 @@
                 Обязательные параметры
             </h3>
         </div>
-        <v-form>
+        <v-form class="mb-12" ref="dataForm">
             <div class="fields mt-2 mb-2">
                 <IndexRequireParams :streamData="stream" :gateways="gatewayList" @input="onInput"/>
             </div>
         </v-form>
         <v-row>
             <v-col>
-                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить</v-btn>
+                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить и далее</v-btn>
+                <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
             </v-col>
             <v-col class="d-flex justify-end mr-12">
                 <v-btn :disabled="disabled" @click="deleteClick()" color="error">Удалить</v-btn>
@@ -64,16 +65,21 @@
             onInput(event){
                 this.fdata = event;
             },
-            async save(){
-                try {
-                    this.disabled=true;
-                    await this.updateStream({id:this.$route.params.id, pdata: this.fdata});
-                    this.disabled=false;
-                    this.$router.push('/import/streams')
-                }catch (e) {
-                    this.disabled=false;
-                    alert('Произошла ошибка');
-                    console.log(e);
+            async save(close){
+                if(this.$refs.dataForm.validate()) {
+                    try {
+                        this.disabled = true;
+                        await this.updateStream({id: this.$route.params.id, pdata: this.fdata});
+                        this.disabled = false;
+                        if (close)
+                            this.$router.push('/import/streams')
+                    } catch (e) {
+                        this.disabled = false;
+                        alert('Произошла ошибка');
+                        console.log(e);
+                    }
+                }else{
+                    this.$vuetify.goTo(0);
                 }
             },
             async deleteClick(){

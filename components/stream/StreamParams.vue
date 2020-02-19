@@ -3,6 +3,8 @@
         <v-col cols="11">
             <v-text-field
                 v-model="fdata.name"
+                required
+                :rules="rules.nameRules"
                 label="Название потока">
             </v-text-field>
         </v-col>
@@ -318,6 +320,11 @@
         },
         data() {
             return {
+                rules: {
+                    nameRules: [
+                        v => !!v || 'Данное поле обязательно',
+                    ]
+                },
                 selectItems: {
                     periodicity: [
                         {text: '15 минут', value: '15m'},

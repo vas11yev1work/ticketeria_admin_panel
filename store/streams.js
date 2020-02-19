@@ -41,6 +41,7 @@ export const actions = {
         try {
             let {data} = await this.$axios.$post('/api/v50/streams', payload);
             context.commit('addStream', data);
+            return data;
         }catch (e) {
             throw networkErrorHandler(e, context);
         }

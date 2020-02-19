@@ -8,7 +8,7 @@
                 Обязательные параметры
             </h3>
         </div>
-        <v-form>
+        <v-form ref="dataForm" class="mb-12">
             <div class="fields mt-2">
                 <IndexRequireParams :gateways="gatewayList" @input="onInput"/>
             </div>
@@ -16,7 +16,8 @@
 
         <v-row>
             <v-col>
-                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить</v-btn>
+                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить и далее</v-btn>
+                <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
             </v-col>
             <v-col class="d-flex justify-end mr-12">
                 <v-btn :disabled="disabled" color="error">Отменить</v-btn>
@@ -54,15 +55,22 @@
             onInput(event){
                 this.fdata = event;
             },
-            async save(){
-                try {
-                    this.disabled=true;
-                    await this.createStream(this.fdata);
-                    this.disabled=false;
-                    this.$router.push('/import/streams')
-                }catch (e) {
-                    this.disabled=false;
-                    alert('Произошла ошибка')
+            async save(close){
+                if(this.$refs.dataForm.validate()) {
+                    try {
+                        this.disabled = true;
+                        let data = await this.createStream(this.fdata);
+                        this.disabled = false;
+                        if(close)
+                            this.$router.push(`/import/streams/`)
+                        else
+                            this.$router.push(`/import/streams/${data._id}`)
+                    } catch (e) {
+                        this.disabled = false;
+                        alert('Произошла ошибка')
+                    }
+                }else{
+                    this.$vuetify.goTo(0);
                 }
             }
         },
