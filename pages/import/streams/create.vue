@@ -15,8 +15,10 @@
         </v-form>
 
         <v-row>
-            <v-col>
+            <v-col cols="3">
                 <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить и далее</v-btn>
+            </v-col>
+            <v-col>
                 <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
             </v-col>
             <v-col class="d-flex justify-end mr-12">
