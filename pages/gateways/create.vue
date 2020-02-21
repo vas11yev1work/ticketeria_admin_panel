@@ -95,7 +95,7 @@
                     if (e.type === 'response') {
                         this.checkResult.status = e.error.status;
                     } else {
-                        this.checkResult.status = 'проблемы с подключением, проверьте интернет';
+                        this.checkResult.status = 'проблемы с подключением';
                     }
                 }finally {
                     this.checkResult.loading = false;

@@ -15,6 +15,7 @@
                     @keyup.enter="endRename"
                     class="edit-field"/>
                 <span v-else class="gateway-title">{{gateway.name}}</span>
+                <v-icon>mdi-bell-ring</v-icon>
                 <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">
                     <v-icon>mdi-settings</v-icon>
                 </v-btn>

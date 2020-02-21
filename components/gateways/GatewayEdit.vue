@@ -3,7 +3,7 @@
         <div class="fields mt-2">
             <div class="additional-setting">
                 <v-row>
-                    <v-col cols="7">
+                    <v-col cols="5">
                         <v-text-field
                             label="Название шлюза"
                             required
@@ -32,7 +32,7 @@
                     </v-col>
                 </v-row>
                 <v-row class="">
-                    <v-col cols="7">
+                    <v-col cols="12">
                         <v-text-field
                             label="Основной URL API"
                             v-model="gateway.apiUrl">
@@ -45,38 +45,47 @@
                             hint="Введите параметр API для определения страны события"
                             label="Страна импортируемых событий"
                             persistent-hint
+                            class="mt-4"
                             v-model="gateway.apiParamsCountry">
                         </v-text-field>
                         <v-text-field
                             hint="Введите параметр API для определения города события"
                             label="Город импортируемых событий"
                             persistent-hint
+                            class="mt-8"
                             v-model="gateway.apiParamsCity">
                         </v-text-field>
                         <v-text-field
                             hint="Введите параметр API для определения места события"
                             label="Местро импортируемых событий"
                             persistent-hint
+                            class="mt-8"
                             v-model="gateway.apiParamsPlace">
                         </v-text-field>
                         <v-text-field
                             hint="Введите параметр API для определения языковой версии"
                             label="Языковая версия"
                             persistent-hint
+                            class="mt-8"
                             v-model="gateway.apiParamsLanguage">
                         </v-text-field>
                         <v-text-field
                             hint="Введите параметр API для определения валюты"
                             label="Валюта"
                             persistent-hint
+                            class="mt-8"
                             v-model="gateway.apiParamsCurrency">
                         </v-text-field>
+                    </v-col>
+                    <v-col cols="12" class="mt-8">
                         <v-textarea
                             label="URL с параметрами выборки"
                             no-resize
                             outlined
                             v-model="gateway.apiParamsUrl">
                         </v-textarea>
+                    </v-col>
+                    <v-col cols="5">
                         <v-select
                             :items="authTypesItems"
                             label="Способ авторизации"
@@ -105,7 +114,7 @@
                         color="green"
                         dark
                         large
-                        >
+                    >
                         <v-progress-circular
                             v-if="checkResult.loading"
                             indeterminate
@@ -117,6 +126,19 @@
                     <span>
                         <span v-if="checkResult.error === false && checkResult.status !== ''" class="status ml-4 green--text font-weight-bold">Ок! Код: {{checkResult.status}}</span>
                         <span v-else-if="checkResult.error === true" class="status ml-4 red--text font-weight-bold">Ошибка! Код: {{checkResult.status}} <a href="#">Скачать log.txt</a></span>
+                    </span>
+                </v-col>
+                <v-col cols="12" class="mt-4">
+                    <v-btn
+                        class="text-capitalize font-weight-regular"
+                        color="green"
+                        dark
+                        large
+                    >
+                        Проверить подключение
+                    </v-btn>
+                    <span>
+                        <span class="status ml-4 red--text font-weight-bold">Ошибка! Код: 500 <a href="#">Скачать log.txt</a></span>
                     </span>
                 </v-col>
             </v-row>
@@ -217,7 +239,7 @@
                     apiParamsAuthLogin: '',
                     apiParamsAuthPassword: '',
                     apiParamsAuthToken: '',
-                    }
+                }
             }
         },
         computed: {},

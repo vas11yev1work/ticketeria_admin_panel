@@ -39,7 +39,12 @@
                     error: false
                 },
                 processing: false,
-                timeoutId: 0
+                timeoutId: 0,
+                fakeCheckResult: {
+                    loading: false,
+                    status: '',
+                    error: false
+                },
             }
         },
 
@@ -86,6 +91,9 @@
                     case 'checkConnection':
                         await this.checkConnection();
                         break;
+                    case 'fakeCheckConnection':
+                        await this.fakeCheckConnection();
+                        break;
                 }
             },
             async tryUpdate(data) {
@@ -118,7 +126,7 @@
                 }
             },
             async checkConnection(){
-                this.checkResult.loading=true;
+                this.checkResult.loading = true;
                 try {
                     let {status, data} = await this.$axios.get('/api/v50/gates');
                     this.checkResult.error = false;
@@ -128,7 +136,7 @@
                     if (e.type === 'response') {
                         this.checkResult.status = e.error.status;
                     } else {
-                        this.checkResult.status = 'проблемы с подключением, проверьте интернет';
+                        this.checkResult.status = 'проблемы с подключением';
                     }
                 }finally {
                     this.checkResult.loading = false;
