@@ -23,9 +23,10 @@
         "eventsource-polyfill": "^0.9.6",
         "js-cookie": "latest",
         "jwt-decode": "^2.2.0",
-        "nuxt": "^2.0.0"
+        "nuxt": "^2.0.0",
+        "vuex": "latest"
     },
     "devDependencies": {
-        "@nuxtjs/vuetify": "^1.0.0"
+        "@nuxtjs/vuetify": "^1.11.0"
     }
 }
