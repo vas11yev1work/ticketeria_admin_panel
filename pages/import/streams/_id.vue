@@ -16,8 +16,8 @@
         <v-row>
             <v-col cols="8">
                 <v-btn :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
-                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить</v-btn>
-                <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
+                <v-btn :disabled="disabled" @click="save()" color="#BDBDBD">Сохранить</v-btn>
+                <v-btn :disabled="disabled" @click="save(true)" color="#BDBDBD">Сохранить и закрыть</v-btn>
             </v-col>
             <v-col class="d-flex justify-end mr-12">
                 <v-btn :disabled="disabled" @click="deleteClick()" color="error">Удалить</v-btn>
