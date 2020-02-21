@@ -15,8 +15,11 @@
         </v-form>
 
         <v-row>
-            <v-col cols="3">
-                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить и далее</v-btn>
+            <v-col cols="2">
+                <v-btn :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
+            </v-col>
+            <v-col cols="2">
+                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить</v-btn>
             </v-col>
             <v-col>
                 <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
@@ -64,7 +67,7 @@
                         let data = await this.createStream(this.fdata);
                         this.disabled = false;
                         if(close)
-                            this.$router.push(`/import/streams/`)
+                            this.$router.push(`/import/streams/`);
                         else
                             this.$router.push(`/import/streams/${data._id}`)
                     } catch (e) {

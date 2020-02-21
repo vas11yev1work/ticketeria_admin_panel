@@ -14,8 +14,11 @@
             </div>
         </v-form>
         <v-row>
+            <v-cols cols="3">
+                <v-btn :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
+            </v-cols>
             <v-col cols="3">
-                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить и далее</v-btn>
+                <v-btn :disabled="disabled" @click="save()" color="primary">Сохранить</v-btn>
             </v-col>
             <v-col>
                 <v-btn :disabled="disabled" @click="save(true)" color="primary">Сохранить и закрыть</v-btn>
