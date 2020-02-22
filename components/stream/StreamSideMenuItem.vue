@@ -15,9 +15,9 @@
                     @keyup.enter="endRename"
                     class="edit-field"/>
                 <span v-else class="gateway-title">{{stream.name}}</span>
-<!--                <v-btn ref="settingsButton" text icon @click="ctxMenu = !ctxMenu" class="icon-button">-->
-<!--                    <v-icon>mdi-settings</v-icon>-->
-<!--                </v-btn>-->
+                <v-btn ref="settingsButton" text icon  class="icon-button">
+                    <v-icon>mdi-settings</v-icon>
+                </v-btn>
             </div>
         </v-list-item-content>
 <!--        <v-scroll-y-transition>-->
