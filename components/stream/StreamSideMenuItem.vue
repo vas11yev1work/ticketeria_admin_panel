@@ -18,6 +18,8 @@
                 <v-btn ref="settingsButton" text icon  class="icon-button">
                     <v-icon>mdi-settings</v-icon>
                 </v-btn>
+                <div class="break"></div>
+                <span class="timeText">04.10.2019 23:28 GMT+3</span>
             </div>
         </v-list-item-content>
 <!--        <v-scroll-y-transition>-->
@@ -134,6 +136,16 @@
 </script>
 
 <style lang="scss">
+    .break {
+        flex-basis: 100%;
+        height: 0;
+    }
+    .timeText{
+        color: #7F828B;
+        top: -7px;
+        font-size: 14px;
+        transform: translateY(-8px);
+    }
     .gateway-title{
         white-space: nowrap;
         width: calc(100% - 40px);
@@ -158,6 +170,7 @@
 
             .item-wrap {
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: space-between;
                 align-items: center;
                 height: 48px;

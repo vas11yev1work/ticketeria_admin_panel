@@ -63,7 +63,7 @@
     export default {
         name: "StreamSideMenu",
         props: {
-            streams: {
+            streamss: {
                 type: Array,
                 default() {
                     return []
@@ -91,7 +91,13 @@
                     },
 
                 ],
-                test: []
+                streams: [{
+                    _id: 1,
+                    name:'1111',
+                },{
+                    _id: 1,
+                    name:'1111',
+                }]
             }
         },
         computed:{
