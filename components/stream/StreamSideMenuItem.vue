@@ -152,6 +152,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: 15px;
+        transform: translateY(-2px);
     }
     .menu-item {
         position: relative;
@@ -187,6 +188,7 @@
 
             .icon-button {
                 opacity: 0;
+                transform: translateY(6px);
             }
 
             &:hover {

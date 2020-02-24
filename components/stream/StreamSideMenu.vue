@@ -9,7 +9,7 @@
             <v-list>
                 <span v-if="importedEvents.length !== 0">
                     <v-list-item v-for="event in importedEvents" :key="event.name" link>
-                        <v-list-item-content @click="" class="item">
+                        <v-list-item-content class="item">
                             <div class="item-wrap d-flex" style="width: 80%">
                                 <div class="gateway-title">{{event.name}}</div>
                                 <v-spacer></v-spacer>
@@ -121,6 +121,6 @@
     .badge{
         background-color: lightgray;
         border-radius: 15px;
-        padding: 3px;
+        padding: 3px 5px;
     }
 </style>
