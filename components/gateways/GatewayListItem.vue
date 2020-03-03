@@ -140,7 +140,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .gateway-title{
         white-space: nowrap;
         width: calc(100% - 40px);

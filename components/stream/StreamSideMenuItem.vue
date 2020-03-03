@@ -135,7 +135,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .break {
         flex-basis: 100%;
         height: 0;
