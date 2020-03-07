@@ -5,7 +5,10 @@
                 v-model="fdata.name"
                 required
                 :rules="rules.nameRules"
-                label="Название потока">
+                label="Название потока"
+                :persistent-hint="true"
+                hint="Создает одноименную полку"
+            >
             </v-text-field>
         </v-col>
         <v-col cols="12">
@@ -31,7 +34,6 @@
             </v-row>
             <v-row v-if="fdata.isPeriodical" class="mt-2">
                 <v-col class="actions-block pa-4"  cols="0">
-                    <h4>Расписание запуска</h4>
                     <v-row>
                         <v-col cols="6">
                             <v-select
@@ -67,7 +69,7 @@
                         </v-col>
                             <v-btn class="mt-4" icon v-if="id!==0" @click="removeTime(id)"><v-icon>mdi-minus-circle-outline</v-icon></v-btn>
                     </v-row>
-                    <v-btn @click="fdata.times.push({hours:0, minutes:0})">Добавить</v-btn>
+                    <a @click="fdata.times.push({hours:0, minutes:0})">Добавить еще одно время запуска</a>
                 </v-col>
             </v-row>
         </v-col>
@@ -91,11 +93,11 @@
             <v-row class="pb-3 mb-8 pt-4">
                 <v-col cols="0">
                     <h4>Город и место в дублях других источников</h4>
+                    <p>Если город или место не были получены из API или настроек потока, можно проверить дубли</p>
                     <v-switch label="Проверить дубли в других источниках и проставить недостающие город или место"
                               class="mt-1"
                               :persistent-hint="true"
                               v-model="fdata.fixCities"/>
-                    <p>Если город или место не были получены из API или настроек потока, можно проверить дубли</p>
                 </v-col>
             </v-row>
             <v-row v-for="(field, id) in fdata.fixies" class="mb-8">
@@ -177,7 +179,9 @@
                 <div v-for="(item, id) in fdata.actions.noAccessEvents">
                     <v-row>
                         <v-col cols="4">
+                            <span>{{id+1}}. </span>
                             <v-select
+                                style="display: inline-block;"
                                 :items="selectItems.customNoAccessFields"
                                 v-model="fdata.actions.noAccessEvents[id].key"
                                 label="Действие">
@@ -198,10 +202,10 @@
                     </v-row>
                     <v-icon class="arrow-down mb-4" v-if="fdata.actions.noAccessEvents.length-1 !== id" >mdi-arrow-down-bold-circle-outline</v-icon>
                 </div>
-                <v-btn @click="fdata.actions.noAccessEvents.push({key: 'removeFromSite', value: ''})">
+                <a @click="fdata.actions.noAccessEvents.push({key: 'removeFromSite', value: ''})">
                     <v-icon>mdi-plus-circle-outline</v-icon>
-                    <span> Добавить</span>
-                </v-btn>
+                    <span>Добавить шаг</span>
+                </a>
             </div>
         </v-col>
         <v-col class="actions-block pa-5 ml-2"  cols="11">
@@ -216,7 +220,9 @@
                 <div v-for="(item, id) in fdata.actions.dublicateEvents">
                     <v-row>
                         <v-col cols="4">
+                            <span>{{id+1}}. </span>
                             <v-select
+                                style="display: inline-block;"
                                 :items="selectItems.customDuplicateFields"
                                 v-model="fdata.actions.dublicateEvents[id].key"
                                 label="Действие">
@@ -253,10 +259,10 @@
                     </v-row>
                     <v-icon class="arrow-down mb-4" v-if="fdata.actions.dublicateEvents.length-1 !== id" >mdi-arrow-down-bold-circle-outline</v-icon>
                 </div>
-                <v-btn @click="fdata.actions.dublicateEvents.push({key: 'removeFromSite', value: ''})">
+                <a @click="fdata.actions.dublicateEvents.push({key: 'removeFromSite', value: ''})">
                     <v-icon>mdi-plus-circle-outline</v-icon>
-                    <span>Добавить</span>
-                </v-btn>
+                    <span>Добавить шаг</span>
+                </a>
             </div>
         </v-col>
         <v-col class="actions-block pa-5 ml-2"  cols="11">
@@ -392,7 +398,7 @@
                         "name": "Обновлять название"
                     },
                     fixiesDataFields:[
-                        {value: "venueCity", text: "Город импортируемых событий", checkboxText: "Проверить дубли в других источниках и проставить недостающие город или место"},
+                        {value: "venueCity", text: "Город импортируемых событий", checkboxText: "Проставлять этот город в случае отсутствия данных о городе"},
                         {value: "venueName", text: "Место импортируемых событий", checkboxText: "Проставлять это место, в случае отсутствия данных о месте"},
                         {value: "venueCountry", text: "Страна импортируемых событий", checkboxText: "Проставлять эту страну в случае отсутствия данных о стране"},
                         {value: "currency", text: "Валюта импортируемых событий", checkboxText: "Проставлять эту валюту в случае отсутствия данных о валюте"},
