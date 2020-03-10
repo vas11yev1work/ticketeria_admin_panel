@@ -5,16 +5,19 @@
                 <v-row>
                     <v-col cols="5">
                         <v-text-field
+                            outlined
                             label="Название шлюза"
                             required
                             :rules="rules.nameRules"
                             v-model="gateway.name">
                         </v-text-field>
+                        <p style="transform: translateY(-26px); font-size: 14px">Создает одноименную полку на складе</p>
                     </v-col>
                 </v-row>
                 <v-row class="">
                     <v-col cols="5">
                         <v-select
+                            outlined
                             :items="dataTypesItems"
                             label="Тип данных"
                             v-model="gateway.dataType">
@@ -25,6 +28,7 @@
                     </v-col>
                     <v-col cols="5">
                         <v-select
+                            outlined
                             :items="methodsTypesItems"
                             label="Метод HTTP"
                             v-model="gateway.httpMethod">
@@ -34,6 +38,7 @@
                 <v-row class="">
                     <v-col cols="12">
                         <v-text-field
+                            outlined
                             label="Основной URL API"
                             v-model="gateway.apiUrl">
                         </v-text-field>
@@ -42,6 +47,7 @@
                 <v-row class="">
                     <v-col cols="5">
                         <v-text-field
+                            outlined
                             hint="Введите параметр API для определения страны события"
                             label="Страна импортируемых событий"
                             persistent-hint
@@ -49,6 +55,7 @@
                             v-model="gateway.apiParamsCountry">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             hint="Введите параметр API для определения города события"
                             label="Город импортируемых событий"
                             persistent-hint
@@ -56,6 +63,7 @@
                             v-model="gateway.apiParamsCity">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             hint="Введите параметр API для определения места события"
                             label="Местро импортируемых событий"
                             persistent-hint
@@ -63,6 +71,7 @@
                             v-model="gateway.apiParamsPlace">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             hint="Введите параметр API для определения языковой версии"
                             label="Языковая версия"
                             persistent-hint
@@ -70,6 +79,7 @@
                             v-model="gateway.apiParamsLanguage">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             hint="Введите параметр API для определения валюты"
                             label="Валюта"
                             persistent-hint
@@ -79,6 +89,7 @@
                     </v-col>
                     <v-col cols="12" class="mt-8">
                         <v-textarea
+                            outlined
                             label="URL с параметрами выборки"
                             no-resize
                             outlined
@@ -87,19 +98,23 @@
                     </v-col>
                     <v-col cols="5">
                         <v-select
+                            outlined
                             :items="authTypesItems"
                             label="Способ авторизации"
                             v-model="gateway.apiParamsAuthType">
                         </v-select>
                         <v-text-field
+                            outlined
                             label="Логин(если есть)"
                             v-model="gateway.apiParamsAuthLogin">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             label="Пароль (если есть)"
                             v-model="gateway.apiParamsAuthPassword">
                         </v-text-field>
                         <v-text-field
+                            outlined
                             label="Токен"
                             v-model="gateway.apiParamsAuthToken">
                         </v-text-field>
@@ -220,7 +235,7 @@
                 ],
                 rules: {
                     nameRules: [
-                        v => !!v || 'Данное поле обязательно',
+                        v => !!v || '',
                     ]
                 },
                 gateway: {
@@ -279,13 +294,3 @@
     }
 
 </script>
-
-<style scoped>
-    .additional-setting {
-        padding: 25px 15px 25px 25px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        border-radius: 5px;
-        margin-bottom: 10px;
-        max-width: 100%;
-    }
-</style>

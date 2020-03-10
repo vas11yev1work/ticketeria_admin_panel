@@ -1,39 +1,63 @@
 <template>
-    <v-row>
-        <v-col cols="5">
-            <v-text-field
-                v-model="fdata.name"
-                required
-                :rules="rules.nameRules"
-                label="Название потока"
-                :persistent-hint="true"
-                hint="Создает одноименную полку"
-            >
-            </v-text-field>
+    <v-row class="mt-12">
+        <v-col cols="12">
+            <div class="wrap" style="display:flex;">
+                <h4
+                    style="font-weight: 400;
+                                            min-width: 190px;
+                                            max-width: 190px" class="mr-6"
+                >Название потока</h4>
+                <div class="act" style="width: 100%;">
+                    <v-col cols="6">
+                        <v-row>
+                            <v-text-field
+                                v-model="fdata.name"
+                                required
+                                outlined
+                                :rules="rules.nameRules"
+                                label="Название потока"
+                                :persistent-hint="true"
+                            >
+                            </v-text-field>
+                        </v-row>
+                    </v-col>
+                </div>
+            </div>
         </v-col>
         <v-col cols="12">
-            <v-row>
-                <v-col cols="5">
-                    <v-select
-                        :items="gatewaysItems"
-                        v-model="fdata.gatewayId"
-                        label="Шлюз">
-                    </v-select>
-                </v-col>
-                <v-col cols="7" class="mt-4">
-                    <nuxt-link to="/gateways" target="_blank">Управлять шлюзами</nuxt-link>
-                </v-col>
-            </v-row>
+            <div class="wrap" style="display:flex;">
+                <h4 style="font-weight: 400;
+                                            min-width: 190px;
+                                            max-width: 190px" class="mr-6"
+                >Шлюз</h4>
+                <div class="act" style="width: 100%; display:flex;">
+                    <v-col cols="6" class="mb-10">
+                        <v-row>
+                            <v-select
+                                outlined
+                                :items="gatewaysItems"
+                                v-model="fdata.gatewayId"
+                                label="Шлюз">
+                            </v-select>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="4" style="transform: translateY(13px)">
+                        <nuxt-link to="/gateways" target="_blank">
+                            <span style="font-size: 14px;">Управлять шлюзами</span>
+                        </nuxt-link>
+                    </v-col>
+                </div>
+            </div>
         </v-col>
         <v-col cols="11">
             <v-row>
                 <v-col cols="0">
-                    <v-switch label="Расписание запуска" :persistent-hint="true" v-model="fdata.isPeriodical"/>
+                    <v-checkbox label="Расписание запуска" v-model="fdata.isPeriodical"/>
                     <p>Если не задать расписание руками, то запуск потока будет выполняться 1 раз в день через 15 минут после запуска другого потока, если другого потока нет, то в 00:15 часов</p>
                 </v-col>
             </v-row>
-            <v-row v-if="fdata.isPeriodical" class="mt-2">
-                <v-col class="actions-block pa-4"  cols="0">
+            <v-row v-if="fdata.isPeriodical">
+                <v-col class="actions-block mb-12"  cols="0">
                     <v-row>
                         <v-col cols="6">
                             <v-select
@@ -73,64 +97,125 @@
                 </v-col>
             </v-row>
         </v-col>
-        <v-col cols="11" class="mb-2">
+        <v-col cols="11" class="mb-12 mt-4">
             <v-row>
                 <v-col cols="0">
-                    <v-switch label="Отображать эвенты сразу на сайте" :persistent-hint="true" v-model="fdata.showEventDirectly"/>
+                    <v-checkbox label="Отображать эвенты сразу на сайте" v-model="fdata.showEventDirectly"/>
                     <p>
                         Внимание, если вы создаёте поток впервые рекомендуется сначала грузить на склад, проверять менять настройки потока на отображение сразу на сайте.
                     </p>
                 </v-col>
             </v-row>
         </v-col>
-
-        <div class="description mb-2 ml-2">
-            <h3 class="black--text">
+        <v-col class="mb-4">
+            <h2 class="black--text" style="font-weight: 500">
                 Дополнительные настройки
-            </h3>
-        </div>
-        <v-col class="additional-setting pa-5" cols="11"> <!--DopNastr-->
-            <v-row class="pb-3 mb-8 pt-4">
+            </h2>
+        </v-col>
+        <v-col class="additional-setting" cols="11"> <!--DopNastr-->
+            <v-row class="pb-3 mb-4 pt-4">
                 <v-col cols="0">
-                    <h4>Город и место в дублях других источников</h4>
-                    <p>Если город или место не были получены из API или настроек потока, можно проверить дубли</p>
-                    <v-switch label="Проверить дубли в других источниках и проставить недостающие город или место"
-                              class="mt-1"
-                              :persistent-hint="true"
-                              v-model="fdata.fixCities"/>
+                    <div class="wrap" style="display:flex;">
+                        <h4 style="white-space: nowrap; font-weight: 400; min-width: 190px; max-width: 190px" class="mr-6">Город и место в дублях <br>других источников</h4>
+                        <div class="act">
+                            <p>Если город или место не были получены из API или настроек потока, можно проверить дубли</p>
+                            <v-checkbox
+                                label="Проверить дубли в других источниках и проставить недостающие город или место"
+                                v-model="fdata.fixCities"
+                            />
+                        </div>
+                    </div>
                 </v-col>
             </v-row>
-            <v-row v-for="(field, id) in fdata.fixies" class="mb-8">
+            <v-row v-for="(field, id) in fdata.fixies">
                 <v-col cols="12">
                     <v-row v-if="selectItems.fixiesDataFields.find(x=>x.value===field.key).select !== true">
-                        <v-col cols="6">
-                            <v-text-field
-                                v-model="fdata.fixies[id].value"
-                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
-                            </v-text-field>
+                        <v-col>
+                            <div class="wrap" style="display:flex;">
+                                <h4
+                                    style="font-weight: 400;
+                                            min-width: 190px;
+                                            max-width: 190px" class="mr-6"
+                                >{{ selectItems.fixiesDataFields.find(x=>x.value===field.key).text }}</h4>
+                                <div class="act" style="width: 100%;">
+                                    <v-col :cols="selectItems.fixiesDataFields.find(x=>x.value===field.key).cols" style="padding-right: 24px;">
+                                        <v-row>
+                                            <v-text-field
+                                                outlined
+                                                style="width: 100%;"
+                                                v-model="fdata.fixies[id].value"
+                                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
+                                            </v-text-field>
+                                        </v-row>
+                                    </v-col>
+                                    <div class="check" style="transform: translateY(-40px)">
+                                        <v-checkbox :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).checkboxText"
+                                                    v-model="fdata.fixies[id].autofix"/>
+                                    </div>
+                                </div>
+                            </div>
                         </v-col>
                     </v-row>
                     <v-row v-else>
-                        <v-col cols="6">
-                            <v-select
-                                :items="selectItems.fixiesDataFields.find(x=>x.value===field.key).items"
-                                v-model="fdata.fixies[id].value"
-                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
-                            </v-select>
+                        <v-col>
+                            <div class="wrap" style="display:flex;">
+                                <h4
+                                    style="font-weight: 400;
+                                            min-width: 190px;
+                                            max-width: 190px" class="mr-6"
+                                >{{ selectItems.fixiesDataFields.find(x=>x.value===field.key).text }}</h4>
+                                <div class="act" style="width: 100%;">
+                                    <v-col :cols="selectItems.fixiesDataFields.find(x=>x.value===field.key).cols" style="padding-right: 24px;">
+<!--                                        <v-row>-->
+<!--                                            <v-select-->
+<!--                                                outlined-->
+<!--                                                :items="selectItems.fixiesDataFields.find(x=>x.value===field.key).items"-->
+<!--                                                v-model="fdata.fixies[id].value"-->
+<!--                                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">-->
+<!--                                            </v-select>-->
+<!--                                            <nuxt-link class="ml-4" style="display:block;" v-if="selectItems.fixiesDataFields.find(x=>x.value===field.key).link" to="/">Управление выражениями</nuxt-link>-->
+<!--                                        </v-row>-->
+                                        <v-row v-if="selectItems.fixiesDataFields.find(x=>x.value===field.key).link">
+                                            <v-select
+                                                style="max-width: 370px"
+                                                outlined
+                                                :items="selectItems.fixiesDataFields.find(x=>x.value===field.key).items"
+                                                v-model="fdata.fixies[id].value"
+                                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
+                                            </v-select>
+                                            <div style="transform: translateY(13px)">
+                                                <nuxt-link class="ml-4" style="display:block;" to="/">
+                                                    <span style="font-size: 14px;">Управление выражениями</span>
+                                                </nuxt-link>
+                                            </div>
+                                        </v-row>
+                                        <v-row v-else>
+                                            <v-select
+                                                outlined
+                                                :items="selectItems.fixiesDataFields.find(x=>x.value===field.key).items"
+                                                v-model="fdata.fixies[id].value"
+                                                :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).text">
+                                            </v-select>
+                                        </v-row>
+                                    </v-col>
+                                    <div class="check" style="transform: translateY(-40px)">
+                                        <v-checkbox :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).checkboxText"
+                                                    v-model="fdata.fixies[id].autofix"/>
+                                    </div>
+                                </div>
+                            </div>
                         </v-col>
                     </v-row>
-                    <v-switch class="ma-0" :label="selectItems.fixiesDataFields.find(x=>x.value===field.key).checkboxText"
-                              v-model="fdata.fixies[id].autofix"/>
                 </v-col>
             </v-row>
         </v-col>
 
-        <div class="description ml-2">
-            <h3 class="black--text">
+        <v-col class="description">
+            <h2 class="black--text" style="font-weight: 500;">
                 Данные для обновления
-            </h3>
-        </div>
-        <v-col class="checkboxes mt-2 mb-4 ml-2" cols="11">
+            </h2>
+        </v-col>
+        <v-col class="checkboxes mt-6 mb-4 ml-2" cols="11" style="transform: translateX(-10px)">
             <v-checkbox v-for="val in fdata.autoUpdateFields"
                         :key="val.key"
                         :label="selectItems.updateDataFieldNames[val.key]"
@@ -139,13 +224,13 @@
             </v-checkbox>
         </v-col>
 
-        <div class="description mb-3 ml-2 mt-8">
-            <h3 class="black--text">
+        <v-col class="description">
+            <h2 class="black--text" style="font-weight: 500;">
                 Логика работы и обработка конфликтов
-            </h3>
-        </div>
+            </h2>
+        </v-col>
 
-        <v-col class="actions-block pa-5 ml-2"  cols="11">
+        <v-col class="actions-block pa-5 mt-8 mb-12"  cols="11">
             <h3>
                 Не присвоился тег категории
             </h3>
@@ -165,8 +250,8 @@
             </v-radio-group>
             <p>Настройка игнорируется, если поток не отображает события сразу на сайте</p>
         </v-col>
-        <v-col class="actions-block pa-5 ml-2"  cols="11">
-            <h3>
+        <v-col class="actions-block pa-5 mb-12"  cols="11">
+            <h3 class="mb-4">
                 Событие не доступно у источника
             </h3>
             <p style="width: 70%">По умолчанию, не доступное событие проверятеся на дубли в другом источнике и меняется ссылка партнёра, но
@@ -178,27 +263,29 @@
             <div v-if="fdata.actions.useCustomAccessEvents">
                 <div v-for="(item, id) in fdata.actions.noAccessEvents">
                     <v-row>
-                        <v-col cols="4">
-                            <span>{{id+1}}. </span>
+                        <v-col cols="4" style="display:flex;">
+                            <span class="mr-4">{{id+1}}. </span>
                             <v-select
                                 style="display: inline-block;"
+                                outlined
                                 :items="selectItems.customNoAccessFields"
                                 v-model="fdata.actions.noAccessEvents[id].key"
                                 label="Действие">
                             </v-select>
                         </v-col>
-
-                        <v-btn class="mt-2" icon v-if="id!==0" @click="fdata.actions.noAccessEvents.splice(id,1)">
-                            <v-icon>mdi-minus-circle-outline</v-icon>
-                        </v-btn>
+                        <div style="width: 30px;"></div>
 
                         <v-col cols="4" v-if="selectItems.customNoAccessFields.find(x=>x.value===item.key)['input']===true">
                             <v-text-field
+                                outlined
                                 :items="selectItems.customNoAccessFields"
                                 v-model="fdata.actions.noAccessEvents[id].value"
                                 label="Параметры">
                             </v-text-field>
                         </v-col>
+                        <v-btn class="mt-2" icon v-if="id!==0" @click="fdata.actions.noAccessEvents.splice(id,1)">
+                            <v-icon>mdi-minus-circle-outline</v-icon>
+                        </v-btn>
                     </v-row>
                     <v-icon class="arrow-down mb-4" v-if="fdata.actions.noAccessEvents.length-1 !== id" >mdi-arrow-down-bold-circle-outline</v-icon>
                 </div>
@@ -208,8 +295,8 @@
                 </a>
             </div>
         </v-col>
-        <v-col class="actions-block pa-5 ml-2"  cols="11">
-            <h3>
+        <v-col class="actions-block pa-5 mb-12"  cols="11">
+            <h3 class="mb-4">
                 Проверка на дубли и логика обработки
             </h3>
             <p style="width: 70%">По умолчанию, если найден дубль, то событие сгружается на склад и идёт уведомление, даже если поток отображает событие сразу на сайте.</p>
@@ -219,43 +306,47 @@
             <div v-if="fdata.actions.useCustomDuplicateEvents">
                 <div v-for="(item, id) in fdata.actions.dublicateEvents">
                     <v-row>
-                        <v-col cols="4">
-                            <span>{{id+1}}. </span>
+                        <v-col cols="4" style="display:flex;">
+                            <span class="mr-4">{{id+1}}. </span>
                             <v-select
-                                style="display: inline-block;"
+                                outlined
+                                class="mr-4"
                                 :items="selectItems.customDuplicateFields"
                                 v-model="fdata.actions.dublicateEvents[id].key"
                                 label="Действие">
                             </v-select>
                         </v-col>
+                        <div style="width: 30px;"></div>
 
-                        <v-btn class="mt-2" icon v-if="id!==0" @click="fdata.actions.dublicateEvents.splice(id,1)">
-                            <v-icon>mdi-minus-circle-outline</v-icon>
-                        </v-btn>
-
-                        <v-col cols="1" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true)">
+                        <v-col cols="2" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true)">
                             <v-select
+                                outlined
                                 :items="selectItems.inputConditions"
                                 v-model="fdata.actions.dublicateEvents[id]['inputAction']"
                                 label="Условие">
                             </v-select>
                         </v-col>
 
-                        <v-col cols="2" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['input'] === true)">
+                        <v-col :cols="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true) ? 2 : 4"
+                               v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['input'] === true)">
                             <v-text-field
+                                outlined
                                 :items="selectItems.customDuplicateFields"
-                                v-model="fdata.actions.dublicateEvents[id].value"
-                                label="Параметры">
+                                v-model="fdata.actions.dublicateEvents[id].value">
                             </v-text-field>
                         </v-col>
 
                         <v-col cols="3" v-if="(selectItems.customDuplicateFields.find(x=>x.value===item.key) !== undefined)&&(selectItems.customDuplicateFields.find(x=>x.value===item.key)['extendedInput'] === true)">
                             <v-select
+                                outlined
                                 :items="selectItems.outputActions"
                                 v-model="fdata.actions.dublicateEvents[id]['outputAction']"
                                 label="Действие">
                             </v-select>
                         </v-col>
+                        <v-btn class="mt-2" icon v-if="id!==0" @click="fdata.actions.dublicateEvents.splice(id,1)">
+                            <v-icon>mdi-minus-circle-outline</v-icon>
+                        </v-btn>
                     </v-row>
                     <v-icon class="arrow-down mb-4" v-if="fdata.actions.dublicateEvents.length-1 !== id" >mdi-arrow-down-bold-circle-outline</v-icon>
                 </div>
@@ -265,23 +356,26 @@
                 </a>
             </div>
         </v-col>
-        <v-col class="actions-block pa-5 ml-2"  cols="11">
-            <h3>
+        <v-col class="actions-block pa-5 mb-12"  cols="11">
+            <h3 class="mb-4">
                 Прошедшие и старые события потока
             </h3>
             <p style="width: 70%">По умолчанию, если событие прошло, то оно остаётся на сайте, убирается кнопка Купить и уведомляется, что событие прошло.</p>
         </v-col>
-        <div class="description mb-3 ml-2 mt-6">
-            <h3 class="black--text">
+        <v-col cols="12" class="description">
+            <h2 class="black--text" style="font-weight: 500;">
                 Уведомление
-            </h3>
-        </div>
-        <v-col cols="11">
+            </h2>
+        </v-col>
+        <v-col cols="6" class="mt-4">
             <v-text-field
+                outlined
                 v-model="fdata.sendNotificationTo"
                 :persistent-hint="true"
                 label="E-mail для уведомлений">
             </v-text-field>
+        </v-col>
+        <v-col cols="12">
             <p>
                 Все уведомления будут отображаться в логе потока и на складе, если вы дополнительно хотите получать их на почту, то задайте её
             </p>
@@ -398,12 +492,12 @@
                         "name": "Обновлять название"
                     },
                     fixiesDataFields:[
-                        {value: "venueCity", text: "Город импортируемых событий", checkboxText: "Проставлять этот город в случае отсутствия данных о городе"},
-                        {value: "venueName", text: "Место импортируемых событий", checkboxText: "Проставлять это место, в случае отсутствия данных о месте"},
-                        {value: "venueCountry", text: "Страна импортируемых событий", checkboxText: "Проставлять эту страну в случае отсутствия данных о стране"},
-                        {value: "currency", text: "Валюта импортируемых событий", checkboxText: "Проставлять эту валюту в случае отсутствия данных о валюте"},
-                        {value: "timezone", text: "Часовой пояс импортируемых событий", checkboxText: "Проставлять этот часовой пояс в случае отсутствия данных о часовом поясе", select: true, items: timezonesList},
-                        {value: "timeFormat", text: "Формат даты и времени событий", checkboxText: "Преобразовать все эвенты в выбранный формат", select: true, items: dateTimeFormats},
+                        {value: "venueCity", text: "Город импортируемых событий", checkboxText: "Проставлять этот город в случае отсутствия данных о городе", cols: 7},
+                        {value: "venueName", text: "Место импортируемых событий", checkboxText: "Проставлять это место, в случае отсутствия данных о месте", cols: 7},
+                        {value: "venueCountry", text: "Страна импортируемых событий", checkboxText: "Проставлять эту страну в случае отсутствия данных о стране", cols: 7},
+                        {value: "currency", text: "Валюта импортируемых событий", checkboxText: "Проставлять эту валюту в случае отсутствия данных о валюте", cols: 7},
+                        {value: "timezone", text: "Часовой пояс импортируемых событий", checkboxText: "Проставлять этот часовой пояс в случае отсутствия данных о часовом поясе", select: true, items: timezonesList, cols: 7},
+                        {value: "timeFormat", text: "Формат даты и времени событий", checkboxText: "Преобразовать все эвенты в выбранный формат", select: true, items: dateTimeFormats, cols: 12, link: true},
                     ],
                     customNoAccessFields: [
                         {value: "removeFromSite", text: "Убрать с сайта", input: false},
@@ -533,24 +627,5 @@
     .arrow-down {
         margin: auto;
         width: 30%;
-    }
-    .checkboxes{
-        padding: 15px 0px 0px 15px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        border-radius: 5px;
-        div {
-            width: 70%;
-        }
-    }
-    .additional-setting > .row{
-        padding: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
-    .actions-block {
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        border-radius: 5px;
-        margin-bottom: 10px;
     }
 </style>

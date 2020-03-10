@@ -16,12 +16,12 @@
 
         <v-row>
                 <v-col cols="8">
-                    <v-btn :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
-                    <v-btn :disabled="disabled" @click="save()" color="#BDBDBD">Сохранить</v-btn>
-                    <v-btn :disabled="disabled" @click="save(true)" color="#BDBDBD">Сохранить и закрыть</v-btn>
+                    <v-btn large :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
+                    <v-btn large :disabled="disabled" @click="save()" color="primary" outlined>Сохранить</v-btn>
+                    <v-btn large :disabled="disabled" @click="save(true)" color="primary" outlined>Сохранить и закрыть</v-btn>
                 </v-col>
             <v-col class="d-flex justify-end mr-12">
-                <v-btn :disabled="disabled" @click="$router.push(`/import/streams/`)" color="error">Отменить</v-btn>
+                <v-btn large :disabled="disabled" @click="$router.push(`/import/streams/`)" color="error" outlined>Отменить</v-btn>
             </v-col>
         </v-row>
     </v-col>
