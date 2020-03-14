@@ -14,7 +14,7 @@
             </div>
         </v-form>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="7">
                 <v-btn large :disabled="disabled" @click="save()" color="primary">Далее</v-btn>
                 <v-btn large :disabled="disabled" @click="save()" color="primary" outlined>Сохранить</v-btn>
                 <v-btn large :disabled="disabled" @click="save(true)" color="primary" outlined>Сохранить и закрыть</v-btn>
