@@ -61,6 +61,7 @@
                     <v-row>
                         <v-col cols="6">
                             <v-select
+                                outlined
                                 :items="selectItems.periodicity"
                                 v-model="fdata.periodicity"
                                 label="Переодичность запуска">
@@ -70,6 +71,7 @@
                     <v-row>
                         <v-col cols="6">
                             <v-select
+                                outlined
                                 :items="selectItems.timezoneList"
                                 v-model="fdata.timeZone"
                                 label="Часовой пояс">
@@ -79,6 +81,7 @@
                     <v-row v-for="(time, id) in fdata.times">
                         <v-col cols="2">
                             <v-select
+                                outlined
                                 :items="selectItems.time.hours"
                                 v-model="time.hours"
                                 label="Часы">
@@ -86,6 +89,7 @@
                         </v-col>
                         <v-col cols="2">
                             <v-select
+                                outlined
                                 :items="selectItems.time.minutes"
                                 v-model="time.minutes"
                                 label="Минуты">
