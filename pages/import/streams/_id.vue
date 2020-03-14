@@ -20,7 +20,7 @@
                 <v-btn large :disabled="disabled" @click="save(true)" color="primary" outlined>Сохранить и закрыть</v-btn>
             </v-col>
             <v-col class="d-flex justify-end mr-12">
-                <v-btn large :disabled="disabled" @click="$router.push(`/import/streams/`)" color="error" outlined>Отменить</v-btn>
+                <v-btn class="mr-1" large :disabled="disabled" @click="$router.push(`/import/streams/`)" color="error" outlined>Отменить</v-btn>
                 <v-btn large :disabled="disabled" @click="deleteClick()" color="error" outlined>Удалить</v-btn>
             </v-col>
         </v-row>
